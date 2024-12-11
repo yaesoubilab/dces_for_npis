@@ -29,7 +29,7 @@ wta_labels = ["Crowded indoor venues closed",
              "50% reduction in transit capacity",
              "", "", ""]
 
-reorder_indices = [
+reorder_indices_coeff = [
     'Business_closures_2',
     'Business_closures_3',
     'Mask_mandates_2',
@@ -43,4 +43,19 @@ reorder_indices = [
     'Healthcare_restrictions_2',
     'Healthcare_restrictions_3',
     'Number_of_infections'
+]
+
+reorder_indices_wtp = [
+    'Business_closures_2',
+    'Business_closures_3',
+    'Mask_mandates_2',
+    'Mask_mandates_3',
+    'Mask_mandates_4',
+    'School_closures_2',
+    'School_closures_3',
+    'School_closures_4',
+    'School_closures_5',
+    'Transit_2',
+    'Healthcare_restrictions_2',
+    'Healthcare_restrictions_3',
 ]
