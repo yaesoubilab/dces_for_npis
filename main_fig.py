@@ -15,13 +15,13 @@ results_vaccine = pd.read_csv('estimates/results_drop_first_level_vaccine_WTP.cs
 coefs_no_vaccine, errs_no_vaccine, coefs_vaccine, errs_coefs_vaccine = get_coeff_estimates_and_errs(
     table_no_vaccine=results_no_vaccine,
     table_vaccine=results_vaccine,
-    reorder_indices=reorder_indices_coeff)
+    reorder_indices=dict_coeff_labels.keys())
 
 # read wta estimates along with confidence intervals
 wtp_vaccine, wtp_errs_vaccine, wtp_no_vaccine, wtp_errs_no_vaccine = get_wtas_cis(
     table_no_vaccine=results_no_vaccine,
     table_vaccine=results_vaccine,
-    reorder_indices=reorder_indices_wtp)
+    reorder_indices=dict_wtp_labels.keys())
 
 # plot
 fig, ax= plt.subplots(1, 2, figsize=FIG_SIZE, sharey=True)
@@ -32,7 +32,7 @@ ax[1].set_title('B)', loc='left', weight='bold')
 add_to_ax(ax=ax[0],
           lists_of_estimates=[coefs_no_vaccine, coefs_vaccine],
           lists_of_ci=[errs_no_vaccine, errs_coefs_vaccine],
-          y_axis_labels=coef_labels,
+          y_axis_labels=dict_coeff_labels.values(),
           x_axis_label='Coefficient Estimates',
           colors=['#2C5784', '#D9534F'],
           labels=['No Vaccine', 'Vaccine'],
@@ -51,4 +51,3 @@ add_to_ax(ax=ax[1],
 
 plt.tight_layout(w_pad=3)
 plt.savefig('figs/coeffs_and_wta.png')
-# plt.show()

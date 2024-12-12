@@ -5,58 +5,22 @@ ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 WTP_X_RANGE = (-200, 200)
 
-coef_labels = ["Crowded indoor venues closed",
-              "Non-essential businesses close",
-              "Masks required only in schools",
-              "Masks required in public",
-              "Masks required in all indoor spaces",
-              "High schools close with remote learning",
-              "High schools close, no remote learning",
-              "All schools close with remote learning",
-              "All schools close, no remote learning",
-              "50% reduction in transit capacity",
-              "Restricted primary care",
-               "Restricted primary and optional care",
-               "Number of infections"]
-wta_labels = ["Crowded indoor venues closed",
-             "Non-essential businesses close",
-             "Masks required only in schools",
-             "Masks required in public",
-             "Masks required in all indoor spaces",
-             "High schools close with remote learning",
-             "High schools close, no remote learning",
-             "All schools close with remote learning",
-             "All schools close, no remote learning",
-             "50% reduction in transit capacity",
-             "", "", ""]
+dict_coeff_labels = {
+    'Business_closures_3':  'Non-essential businesses close',
+    'Business_closures_2':  'Crowded indoor venues closed',
+    'Mask_mandates_4':      'Masks required in all indoor spaces',
+    'Mask_mandates_3':      'Masks required in indoor spaces (excluding schools)',
+    'Mask_mandates_2':      'Masks required only in schools',
+    'School_closures_5':    'All schools closed without remote learning',
+    'School_closures_4':    'All schools closed with remote learning',
+    'School_closures_3':    'High schools closed without remote learning',
+    'School_closures_2':    'High schools closed with remote learning',
+    'Transit_2':            '50% reduction in transit capacity',
+    'Healthcare_restrictions_3': 'Restricted primary and optional care',
+    'Healthcare_restrictions_2': 'Restricted primary care',
+    'Number_of_infections': 'Number of infections'
+}
 
-reorder_indices_coeff = [
-    'Business_closures_2',
-    'Business_closures_3',
-    'Mask_mandates_2',
-    'Mask_mandates_3',
-    'Mask_mandates_4',
-    'School_closures_2',
-    'School_closures_3',
-    'School_closures_4',
-    'School_closures_5',
-    'Transit_2',
-    'Healthcare_restrictions_2',
-    'Healthcare_restrictions_3',
-    'Number_of_infections'
-]
+dict_wtp_labels = dict_coeff_labels.copy()
+del dict_wtp_labels['Number_of_infections']
 
-reorder_indices_wtp = [
-    'Business_closures_2',
-    'Business_closures_3',
-    'Mask_mandates_2',
-    'Mask_mandates_3',
-    'Mask_mandates_4',
-    'School_closures_2',
-    'School_closures_3',
-    'School_closures_4',
-    'School_closures_5',
-    'Transit_2',
-    'Healthcare_restrictions_2',
-    'Healthcare_restrictions_3',
-]
