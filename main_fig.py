@@ -2,18 +2,14 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 from defenisions import *
-from fig_support import add_to_ax
-from func_support import get_coeff_estimates_and_errs, get_wtas_cis
+from support.fig_support import add_to_ax
+from support.func_support import get_coeff_estimates_and_errs, get_wtas_cis
 
 FIG_SIZE = (10, 6)
-WTP_X_RANGE = (-200, 200)
-MARKER_SIZE = 7
-INCLUDE_VACCINE = True
-
 
 # read results for vaccine and no vaccine scnearios
-results_no_vaccine = pd.read_csv('estimates/results_drop_first_level_no_vaccine_WTP.csv', index_col= 0)
-results_vaccine = pd.read_csv('estimates/results_drop_first_level_vaccine_WTP.csv', index_col= 0)
+results_no_vaccine = pd.read_csv('estimates/results_drop_first_level_no_vaccine_WTP.csv', index_col=0)
+results_vaccine = pd.read_csv('estimates/results_drop_first_level_vaccine_WTP.csv', index_col=0)
 
 # read coefficient estimates along with confidence intervals
 coefs_no_vaccine, errs_no_vaccine, coefs_vaccine, errs_coefs_vaccine = get_coeff_estimates_and_errs(

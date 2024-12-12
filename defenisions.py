@@ -3,6 +3,7 @@ import os
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
+WTP_X_RANGE = (-200, 200)
 
 coef_labels = ["Crowded indoor venues closed",
               "Non-essential businesses close",

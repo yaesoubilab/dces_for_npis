@@ -26,7 +26,7 @@ def add_to_ax(ax,
                     fmt='o', color=colors[i], ecolor=colors[i], capsize=0, alpha=0.7,
                     label=labels[i])
 
-    ax.set_xlabel(x_axis_label, fontsize=14)
+    ax.set_xlabel(x_axis_label, fontsize=12)
     if y_axis_labels is not None:
         ax.set_yticks(np.arange(len(y_axis_labels)))
         ax.set_yticklabels(y_axis_labels, fontsize=10)
