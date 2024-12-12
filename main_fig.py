@@ -24,7 +24,7 @@ wtp_vaccine, wtp_errs_vaccine, wtp_no_vaccine, wtp_errs_no_vaccine = get_wtas_ci
     reorder_indices=dict_wtp_labels.keys())
 
 # plot
-fig, ax= plt.subplots(1, 2, figsize=FIG_SIZE, sharey=True)
+fig, ax = plt.subplots(1, 2, figsize=FIG_SIZE, sharey=True)
 ax[0].set_title('A)', loc='left', weight='bold')
 ax[1].set_title('B)', loc='left', weight='bold')
 
@@ -47,7 +47,6 @@ add_to_ax(ax=ax[1],
           labels=['No Vaccine', 'Vaccine'],
           legend_loc='upper left',
           distance_between_bars=0.3)
-
 
 plt.tight_layout(w_pad=3)
 plt.savefig('figs/coeffs_and_wta.png')
