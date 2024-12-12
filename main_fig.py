@@ -3,7 +3,7 @@ import pandas as pd
 
 from defenisions import *
 from support.fig_support import add_to_2_axes
-from support.func_support import get_coeff_estimates_and_errs, get_wtas_cis
+from support.func_support import get_coefs_and_errs, get_wtas_and_errs
 
 FIG_SIZE = (10, 6)
 
@@ -14,16 +14,16 @@ def do_main_figure():
     results_vaccine = pd.read_csv('estimates/results_drop_first_level_vaccine_WTP.csv', index_col=0)
 
     # read coefficient estimates along with confidence intervals
-    coefs_no_vaccine, errs_no_vaccine, coefs_vaccine, errs_coefs_vaccine = get_coeff_estimates_and_errs(
+    coefs_no_vaccine, errs_no_vaccine, coefs_vaccine, errs_coefs_vaccine = get_coefs_and_errs(
         table_no_vaccine=results_no_vaccine,
         table_vaccine=results_vaccine,
-        reorder_indices=dict_coeff_labels.keys())
+        attribute_keys=dict_coeff_labels.keys())
 
     # read wta estimates along with confidence intervals
-    wtp_vaccine, wtp_errs_vaccine, wtp_no_vaccine, wtp_errs_no_vaccine = get_wtas_cis(
+    wtp_vaccine, wtp_errs_vaccine, wtp_no_vaccine, wtp_errs_no_vaccine = get_wtas_and_errs(
         table_no_vaccine=results_no_vaccine,
         table_vaccine=results_vaccine,
-        reorder_indices=dict_wtp_labels.keys())
+        attribute_keys=dict_wtp_labels.keys())
 
     # plot
     fig, ax = plt.subplots(1, 2, figsize=FIG_SIZE, sharey=True)

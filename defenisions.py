@@ -9,7 +9,7 @@ dict_coeff_labels = {
     'Business_closures_3':  'Non-essential businesses close',
     'Business_closures_2':  'Crowded indoor venues closed',
     'Mask_mandates_4':      'Masks required in all indoor spaces',
-    'Mask_mandates_3':      'Masks required in indoor spaces (excluding schools)',
+    'Mask_mandates_3':      'Masks required in indoor spaces\n(excluding schools)',
     'Mask_mandates_2':      'Masks required only in schools',
     'School_closures_5':    'All schools closed without remote learning',
     'School_closures_4':    'All schools closed with remote learning',
