@@ -121,6 +121,7 @@ def do_fig_by_group(
     ax[0].set_title('A)', loc='left', weight='bold')
     ax[1].set_title('B)', loc='left', weight='bold')
 
+    x_axis_label = 'Coefficient Estimates' if estimate_type == 'coeff' else 'Willingness To Accept (WTA)'
     # plot coefficient and wta estimates side by side
     add_to_2_axes(
         axes=ax,
@@ -130,8 +131,8 @@ def do_fig_by_group(
         lists_of_errs_right=list(errs_coefs_vaccine.values()),
         title_left = 'Vaccine Not Available',
         title_right = 'Vaccine Available',
-        x_axis_label_left='Coefficient Estimates',
-        x_axis_label_right='Coefficient Estimates',
+        x_axis_label_left=x_axis_label,
+        x_axis_label_right=x_axis_label,
         colors=group_colors,
         labels=group_categories,
         y_axis_labels=dict_coeff_labels.values(),

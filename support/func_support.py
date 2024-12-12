@@ -89,4 +89,3 @@ def get_wtas_and_errs_by_vaccine(table_no_vaccine, table_vaccine, attribute_keys
         table=table_vaccine, attribute_keys=attribute_keys)
 
     return estimates_no_vaccine, errs_no_vaccine, estimates_vaccine, errs_wtp_vaccine
-
