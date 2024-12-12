@@ -3,12 +3,12 @@ import numpy as np
 
 def add_to_ax(ax,
               lists_of_estimates,
-              lists_of_ci,
+              lists_of_errs,
               x_axis_label,
               colors, labels,
               y_axis_labels=None,
               legend_loc='upper right',
-              distance_between_bars=None,):
+              distance_between_bars=None, ):
 
     # number of lists
     n = len(lists_of_estimates)
@@ -21,8 +21,8 @@ def add_to_ax(ax,
 
     for i, this_list in enumerate(lists_of_estimates):
         ax.errorbar(this_list,
-                    np.arange(len(this_list))+diffs[i],
-                    xerr=lists_of_ci[i],
+                    np.arange(len(this_list)) + diffs[i],
+                    xerr=lists_of_errs[i],
                     fmt='o', color=colors[i], ecolor=colors[i], capsize=0, alpha=0.7,
                     label=labels[i])
 
@@ -34,3 +34,36 @@ def add_to_ax(ax,
     ax.axvline(x=0, color='black', linestyle='-', linewidth=1.3)
     ax.grid(True, linestyle='--', alpha=0.7)
     ax.legend(loc=legend_loc, fontsize=10)
+
+
+def add_to_2_axes(axes,
+                  lists_of_estimates_left,
+                  lists_of_errs_left,
+                  lists_of_estimates_right,
+                  lists_of_errs_right,
+                  x_axis_label_left,
+                  x_axis_label_right,
+                  colors, labels,
+                  y_axis_labels=None,
+                  legend_loc='upper right',
+                  distance_between_bars=None):
+
+    # add left
+    add_to_ax(ax=axes[0],
+              lists_of_estimates=lists_of_estimates_left,
+              lists_of_errs=lists_of_errs_left,
+              x_axis_label=x_axis_label_left,
+              colors=colors,
+              labels=labels,
+              y_axis_labels=y_axis_labels,
+              distance_between_bars=distance_between_bars)
+
+    # add right
+    add_to_ax(ax=axes[1],
+              lists_of_estimates=lists_of_estimates_right,
+              lists_of_errs=lists_of_errs_right,
+              x_axis_label=x_axis_label_right,
+              colors=colors,
+              labels=labels,
+              legend_loc=legend_loc,
+              distance_between_bars=distance_between_bars)
