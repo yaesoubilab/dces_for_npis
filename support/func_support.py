@@ -1,23 +1,56 @@
-def get_coefs_and_errs(table_no_vaccine, table_vaccine, attribute_keys):
+import pandas as pd
 
-    # remove ACS2 and SIGMA_PANEL_ASC2 estimates from the results
-    results_no_vaccine_filtered = table_no_vaccine.drop(['ACS2', 'SIGMA_PANEL_ASC2'])
-    results_vaccine_filtered = table_vaccine.drop(['ACS2', 'SIGMA_PANEL_ASC2'])
 
-    estimates_no_vaccine = results_no_vaccine_filtered['Value'].loc[attribute_keys]
-    errs_no_vaccine = results_no_vaccine_filtered['Std err'].loc[attribute_keys] * 1.96
+def get_table(file_path, if_drop_infection_rate):
+    """ Read the table from the file path and drop the unnecessary rows """
 
-    estimates_vaccine = results_vaccine_filtered['Value'].loc[attribute_keys]
-    errs_vaccine = results_vaccine_filtered['Std err'].loc[attribute_keys] * 1.96
+    table = pd.read_csv(file_path, index_col=0)
+    if if_drop_infection_rate:
+        table = table.drop(['ACS2', 'SIGMA_PANEL_ASC2', 'Number_of_infections'])
+    else:
+        table = table.drop(['ACS2', 'SIGMA_PANEL_ASC2'])
+
+    return  table
+
+
+def get_coefs_and_errs(table, attribute_keys):
+    """ Get coefficient estimates and errors """
+
+    estimates = table['Value'].loc[attribute_keys]
+    errs = table['Std err'].loc[attribute_keys] * 1.96
+
+    return estimates, errs
+
+
+def get_wtas_and_errs(table, attribute_keys):
+    """ Get WTA estimates and errors """
+
+    # get wtp estimates and errors
+    wtas = table['WTP_mean'].loc[attribute_keys]*100
+    errs = [
+        wtas - table['WTP_CI_lower'].loc[attribute_keys]*100,
+        table['WTP_CI_upper'].loc[attribute_keys]*100 - wtas]
+
+    return wtas, errs
+
+
+def get_coefs_and_errs_by_vaccine(table_no_vaccine, table_vaccine, attribute_keys):
+    """ Get coefficient estimates and errors for no vaccine and with vaccine scenarios """
+
+    # get coefficient estimates and errors for no vaccine scenario
+    estimates_no_vaccine, errs_no_vaccine = get_coefs_and_errs(
+        table=table_no_vaccine, attribute_keys= attribute_keys)
+
+    # get coefficient estimates and errors for with vaccine scenario
+    estimates_vaccine, errs_vaccine = get_coefs_and_errs(
+        table=table_vaccine, attribute_keys=attribute_keys)
 
     return estimates_no_vaccine, errs_no_vaccine, estimates_vaccine, errs_vaccine
 
 
-def get_dict_coefs_and_errs_by_subgroups(table_no_vaccine, table_vaccine, attribute_keys, subgroups):
-
-    # remove ACS2 and SIGMA_PANEL_ASC2 estimates from the results
-    table_no_vaccine = table_no_vaccine.drop(['ACS2', 'SIGMA_PANEL_ASC2'])
-    table_vaccine = table_vaccine.drop(['ACS2', 'SIGMA_PANEL_ASC2'])
+def get_dict_estimates_and_errs_by_subgroups(
+        table_no_vaccine, table_vaccine, attribute_keys, estimate_type, subgroups):
+    """ Get coefficient estimates and errors for subgroups """
 
     # dictionaries
     estimates_no_vaccine, errs_no_vaccine, estimates_vaccine, errs_vaccine = {}, {}, {}, {}
@@ -30,40 +63,30 @@ def get_dict_coefs_and_errs_by_subgroups(table_no_vaccine, table_vaccine, attrib
         # update attribute keys by adding the group name
         group_attribute_keys = [key + '_' + group for key in attribute_keys]
 
-        estimates_no_vaccine[group] = table_no_vaccine_filtered['Value'].loc[group_attribute_keys]
-        errs_no_vaccine[group] = table_no_vaccine_filtered['Std err'].loc[group_attribute_keys] * 1.96
-
-        estimates_vaccine[group] = table_vaccine_filtered['Value'].loc[group_attribute_keys]
-        errs_vaccine[group] = table_vaccine_filtered['Std err'].loc[group_attribute_keys] * 1.96
+        # estimates and err
+        if estimate_type == 'coeff':
+            estimates_no_vaccine[group], errs_no_vaccine[group] = get_coefs_and_errs(
+                table=table_no_vaccine_filtered, attribute_keys=group_attribute_keys)
+            estimates_vaccine[group], errs_vaccine[group] = get_coefs_and_errs(
+                table=table_vaccine_filtered, attribute_keys=group_attribute_keys)
+        elif estimate_type == 'wta':
+            estimates_no_vaccine[group], errs_no_vaccine[group]= get_wtas_and_errs(
+                table=table_no_vaccine_filtered, attribute_keys=group_attribute_keys)
+            estimates_vaccine[group], errs_vaccine[group] = get_wtas_and_errs(
+                table=table_vaccine_filtered, attribute_keys=group_attribute_keys)
+        else:
+            raise ValueError('Invalid estimate type.')
 
     return estimates_no_vaccine, errs_no_vaccine, estimates_vaccine, errs_vaccine
 
 
-def get_wtas_and_errs(table_no_vaccine, table_vaccine, attribute_keys):
+def get_wtas_and_errs_by_vaccine(table_no_vaccine, table_vaccine, attribute_keys):
+    """ Get WTA estimates and errors for no vaccine and with vaccine scenarios """
 
-    # multiply WTA by 100 to get per 100 population
-    for results in [table_no_vaccine, table_vaccine]:
-        results['WTP_mean'] = results['WTP_mean'] * 100
-        results['WTP_CI_lower'] = results['WTP_CI_lower']*100
-        results['WTP_CI_upper'] = results['WTP_CI_upper']*100
-
-    # remove ACS2 and SIGMA_PANEL_ASC2 estimates from the results
-    # and number of infections since WTA is not defined for it
-    results_no_vaccine_filtered = table_no_vaccine.drop(['ACS2', 'SIGMA_PANEL_ASC2', 'Number_of_infections'])
-    results_vaccine_filtered = table_vaccine.drop(['ACS2', 'SIGMA_PANEL_ASC2', 'Number_of_infections'])
-
-    # get wtp estimates and errors
-    estimates_no_vaccine = results_no_vaccine_filtered['WTP_mean'].loc[attribute_keys]
-    errs_no_vaccine = [
-        estimates_no_vaccine - results_no_vaccine_filtered['WTP_CI_lower'].loc[attribute_keys],
-        results_no_vaccine_filtered['WTP_CI_upper'].loc[attribute_keys] - estimates_no_vaccine
-    ]
-
-    estimates_vaccine = results_vaccine_filtered['WTP_mean'].loc[attribute_keys]
-    errs_wtp_vaccine = [
-        estimates_vaccine - results_vaccine_filtered['WTP_CI_lower'].loc[attribute_keys],
-        results_vaccine_filtered['WTP_CI_upper'].loc[attribute_keys] - estimates_vaccine
-    ]
+    estimates_no_vaccine, errs_no_vaccine = get_wtas_and_errs(
+        table=table_no_vaccine, attribute_keys=attribute_keys)
+    estimates_vaccine, errs_wtp_vaccine = get_wtas_and_errs(
+        table=table_vaccine, attribute_keys=attribute_keys)
 
     return estimates_no_vaccine, errs_no_vaccine, estimates_vaccine, errs_wtp_vaccine
 

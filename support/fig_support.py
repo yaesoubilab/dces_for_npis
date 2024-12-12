@@ -1,9 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
-import pandas as pd
 
 from defenisions import *
-from support.func_support import get_dict_coefs_and_errs_by_subgroups
+from support.func_support import get_dict_estimates_and_errs_by_subgroups, get_table
 
 
 def add_to_ax(ax,
@@ -80,32 +79,54 @@ def add_to_2_axes(axes,
               distance_between_bars=distance_between_bars)
 
 
-def do_coeffs_by_group(group_name, group_categories, group_colors, distance_between_bars=0.3, figsize=(10,6)):
+def do_fig_by_group(
+        estimate_type, group_name, group_categories, group_colors,
+        distance_between_bars=0.3, fig_size=(10, 6)):
+    """
+    :param estimate_type: (string) 'coeffs' or 'wtas'
+    :param group_name:
+    :param group_categories:
+    :param group_colors:
+    :param distance_between_bars:
+    :param fig_size:
+    :return:
+    """
 
     # read results for vaccine and no vaccine scenarios
-    results_no_vaccine = pd.read_csv(
-        'estimates/results_{}_no_vaccine.csv'.format(group_name), index_col=0)
-    results_vaccine = pd.read_csv(
-        'estimates/results_{}_vaccine.csv'.format(group_name), index_col=0)
+    results_no_vaccine = get_table(
+        'estimates/results_{}_no_vaccine.csv'.format(group_name), if_drop_infection_rate=False)
+    results_vaccine =  get_table(
+        'estimates/results_{}_vaccine.csv'.format(group_name), if_drop_infection_rate=False)
 
-    # read coefficient estimates along with confidence intervals
-    coefs_no_vaccine, errs_no_vaccine, coefs_vaccine, errs_coefs_vaccine = get_dict_coefs_and_errs_by_subgroups(
-        table_no_vaccine=results_no_vaccine,
-        table_vaccine=results_vaccine,
-        attribute_keys=dict_coeff_labels.keys(),
-        subgroups=group_categories)
+    if estimate_type == 'coeff':
+        # read coefficient estimates along with confidence intervals
+        estims_no_vaccine, errs_no_vaccine, estims_vaccine, errs_coefs_vaccine = get_dict_estimates_and_errs_by_subgroups(
+            table_no_vaccine=results_no_vaccine,
+            table_vaccine=results_vaccine,
+            attribute_keys=dict_coeff_labels.keys(),
+            subgroups=group_categories, estimate_type='coeff')
+
+    elif estimate_type == 'wta':
+        # read wtp estimates along with confidence intervals
+        estims_no_vaccine, errs_no_vaccine, estims_vaccine, errs_coefs_vaccine = get_dict_estimates_and_errs_by_subgroups(
+            table_no_vaccine=results_no_vaccine,
+            table_vaccine=results_vaccine,
+            attribute_keys=dict_wtp_labels.keys(),
+            subgroups=group_categories, estimate_type='wta')
+    else:
+        raise ValueError('Invalid estimate type')
 
     # plot
-    fig, ax = plt.subplots(1, 2, figsize=figsize, sharey=True)
+    fig, ax = plt.subplots(1, 2, figsize=fig_size, sharey=True)
     ax[0].set_title('A)', loc='left', weight='bold')
     ax[1].set_title('B)', loc='left', weight='bold')
 
     # plot coefficient and wta estimates side by side
     add_to_2_axes(
         axes=ax,
-        lists_of_estimates_left=list(coefs_no_vaccine.values()),
+        lists_of_estimates_left=list(estims_no_vaccine.values()),
         lists_of_errs_left=list(errs_no_vaccine.values()),
-        lists_of_estimates_right=list(coefs_vaccine.values()),
+        lists_of_estimates_right=list(estims_vaccine.values()),
         lists_of_errs_right=list(errs_coefs_vaccine.values()),
         title_left = 'Vaccine Not Available',
         title_right = 'Vaccine Available',
@@ -119,4 +140,4 @@ def do_coeffs_by_group(group_name, group_categories, group_colors, distance_betw
     )
 
     plt.tight_layout(w_pad=3)
-    plt.savefig('figs/coeffs_by_{}.png'.format(group_name))
+    plt.savefig('figs/{}_by_{}.png'.format(estimate_type, group_name))
