@@ -7,13 +7,15 @@ subgroup_info = {
         {
             'title': 'Gender',
             'group_categories': ['Male', 'Female'],
+            'legend_labels': ['Male', 'Female'],
             'group_colors': ['#2C5784', '#D9534F'],
             'dist_between_bars': 0.2
         },
     'vaccine status':
         {
             'title': 'Vaccine Status',
-            'group_categories': ['Vaccine'],
+            'group_categories': ['Yes', 'No'],
+            'legend_labels': ['Yes', 'No'],
             'group_colors': ['#2C5784', '#D9534F'],
             'dist_between_bars': 0.2
         }

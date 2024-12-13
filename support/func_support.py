@@ -35,28 +35,28 @@ def get_wtas_and_errs(table, attribute_keys):
 
 
 def get_dict_estimates_and_errs_by_subgroups(
-        survey_scenario, group_name, attribute_keys, estimate_type, subgroups):
+        survey_scenario, subgroup_name, subgroup_categories, attribute_keys, estimate_type):
     """ Get coefficient estimates and errors for subgroups
     : param survey_scenario: (string) 'vaccine' or 'no vaccine'
-    : param subgroups: (list) list of subgroups
-    : param group_name: (string) name of the group
+    : param subgroup_name: (string) name of the subgroup
+    : param subgroup_categories: (list) list of subgroup categories
     : param attribute_keys: (list) list of attribute keys
     : param estimate_type: (string) 'coeff' or 'wta'
     """
 
     if survey_scenario == 'no vaccine':
         table = get_table(
-            'estimates/results_{}_no_vaccine.csv'.format(group_name), if_drop_infection_rate=False)
+            'estimates/results_{}_no_vaccine.csv'.format(subgroup_name), if_drop_infection_rate=False)
     elif survey_scenario == 'vaccine':
         table = get_table(
-            'estimates/results_{}_vaccine.csv'.format(group_name), if_drop_infection_rate=False)
+            'estimates/results_{}_vaccine.csv'.format(subgroup_name), if_drop_infection_rate=False)
     else:
         raise ValueError('Invalid survey scenario')
 
     # dictionaries
     estimates, errs = {}, {}
 
-    for group in subgroups:
+    for group in subgroup_categories:
 
         table_filtered = table[table.index.str.contains(group)]
 

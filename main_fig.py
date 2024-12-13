@@ -53,8 +53,8 @@ def do_main_figure():
         distance_between_bars=0.2
     )
 
-    plt.tight_layout(w_pad=3)
-    plt.savefig('figs/coeff_and_wta.png')
+    fig.tight_layout(w_pad=3)
+    fig.savefig('figs/coeff_and_wta.png')
 
 
 if __name__ == '__main__':
