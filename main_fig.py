@@ -7,7 +7,6 @@ from support.func_support import get_coefs_and_errs_by_vaccine, get_wtas_and_err
 FIG_SIZE = (10, 6)
 
 def do_main_figure():
-
     # read results for vaccine and no vaccine scenarios
     results_no_vaccine = get_table(
         file_path='estimates/results_drop_first_level_no_vaccine_WTP.csv',
@@ -46,7 +45,7 @@ def do_main_figure():
         labels=['No Vaccine', 'Vaccine'],
         y_axis_labels=dict_coeff_labels.values(),
         legend_loc='upper right',
-        distance_between_bars=0.3
+        distance_between_bars=0.2
     )
 
     plt.tight_layout(w_pad=3)

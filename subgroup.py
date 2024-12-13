@@ -12,5 +12,5 @@ if __name__ == '__main__':
             group_name='gender',
             group_categories=['Male', 'Female'],
             group_colors = ['#2C5784', '#D9534F'],
-            distance_between_bars=0.3,
+            distance_between_bars=0.2,
             fig_size=FIG_SIZE)
