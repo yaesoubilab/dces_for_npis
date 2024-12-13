@@ -7,6 +7,7 @@ from support.func_support import get_wtas_and_errs, get_table, get_coefs_and_err
 FIG_SIZE = (10, 6)
 
 def do_main_figure():
+
     # read results for vaccine and no vaccine scenarios
     results_no_vaccine = get_table(
         file_path='estimates/results_drop_first_level_no_vaccine_WTP.csv',

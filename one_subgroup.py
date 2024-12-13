@@ -3,7 +3,6 @@ from support.fig_support import do_fig_by_group
 FIG_SIZE = (10, 6)
 
 
-
 if __name__ == '__main__':
 
     for estimate_type in ['coeff', 'wta']:

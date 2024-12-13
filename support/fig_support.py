@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from defenisions import *
-from support.func_support import get_dict_estimates_and_errs_by_subgroups, get_table
+from support.func_support import get_dict_estimates_and_errs_by_subgroups
 
 
 def add_to_ax(ax,
@@ -92,29 +92,18 @@ def do_fig_by_group(
     :return:
     """
 
-    # read results for vaccine and no vaccine scenarios
-    results_no_vaccine = get_table(
-        'estimates/results_{}_no_vaccine.csv'.format(group_name), if_drop_infection_rate=False)
-    results_vaccine =  get_table(
-        'estimates/results_{}_vaccine.csv'.format(group_name), if_drop_infection_rate=False)
+    # get estimates and errors
+    estims_no_vaccine, errs_no_vaccine = get_dict_estimates_and_errs_by_subgroups(
+        survey_scenario='no vaccine',
+        group_name=group_name,
+        attribute_keys=dict_coeff_labels.keys(),
+        subgroups=group_categories, estimate_type=estimate_type)
 
-    if estimate_type == 'coeff':
-        # read coefficient estimates along with confidence intervals
-        estims_no_vaccine, errs_no_vaccine, estims_vaccine, errs_coefs_vaccine = get_dict_estimates_and_errs_by_subgroups(
-            table_no_vaccine=results_no_vaccine,
-            table_vaccine=results_vaccine,
-            attribute_keys=dict_coeff_labels.keys(),
-            subgroups=group_categories, estimate_type='coeff')
-
-    elif estimate_type == 'wta':
-        # read wtp estimates along with confidence intervals
-        estims_no_vaccine, errs_no_vaccine, estims_vaccine, errs_coefs_vaccine = get_dict_estimates_and_errs_by_subgroups(
-            table_no_vaccine=results_no_vaccine,
-            table_vaccine=results_vaccine,
-            attribute_keys=dict_wtp_labels.keys(),
-            subgroups=group_categories, estimate_type='wta')
-    else:
-        raise ValueError('Invalid estimate type')
+    estims_vaccine, errs_coefs_vaccine = get_dict_estimates_and_errs_by_subgroups(
+        survey_scenario='vaccine',
+        group_name=group_name,
+        attribute_keys=dict_coeff_labels.keys(),
+        subgroups=group_categories, estimate_type=estimate_type)
 
     # plot
     fig, ax = plt.subplots(1, 2, figsize=fig_size, sharey=True)
