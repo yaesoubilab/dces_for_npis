@@ -27,6 +27,6 @@ if __name__ == '__main__':
     for estimate_type in ['coeff', 'wta']:
         do_row_of_subgroups(
             estimate_type=estimate_type,
-            survey_scenario='No Vaccine',
-            subgroup_info = subgroup_info,
+            survey_scenario='no vaccine', # 'no vaccine' or 'vaccine'
+            subgroup_info=subgroup_info,
             fig_size=FIG_SIZE)

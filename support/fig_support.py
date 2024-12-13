@@ -147,7 +147,7 @@ def do_row_of_subgroups(estimate_type, survey_scenario, subgroup_info, fig_size)
     for i, key in enumerate(subgroup_info):
 
         # get estimates and errors
-        list_of_estimates, list_of_errs = get_dict_estimates_and_errs_by_subgroups(
+        dict_estimates, dict_errs = get_dict_estimates_and_errs_by_subgroups(
             survey_scenario=survey_scenario,
             subgroup_name=key,
             attribute_keys=dict_coeff_labels.keys(),
@@ -157,8 +157,8 @@ def do_row_of_subgroups(estimate_type, survey_scenario, subgroup_info, fig_size)
 
         add_to_ax(
             ax=ax[i],
-            lists_of_estimates=list_of_estimates,
-            lists_of_errs=list_of_errs,
+            lists_of_estimates=list(dict_estimates.values()),
+            lists_of_errs=list(dict_errs.values()),
             x_axis_label='Coefficient Estimates' if estimate_type == 'coeff' else 'Willingness To Accept (WTA)',
             colors=subgroup_info[key]['group_colors'],
             legend_labels=subgroup_info[key]['group_categories'],
