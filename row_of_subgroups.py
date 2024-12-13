@@ -11,7 +11,7 @@ subgroup_info = {
             'group_colors': ['#2C5784', '#D9534F'],
             'dist_between_bars': 0.2
         },
-    'vaccine status':
+    'vaccination':
         {
             'title': 'Vaccine Status',
             'group_categories': ['Yes', 'No'],
