@@ -34,58 +34,70 @@ def get_wtas_and_errs(table, attribute_keys):
     return wtas, errs
 
 
-def get_coefs_and_errs_by_vaccine(table_no_vaccine, table_vaccine, attribute_keys):
-    """ Get coefficient estimates and errors for no vaccine and with vaccine scenarios """
-
-    # get coefficient estimates and errors for no vaccine scenario
-    estimates_no_vaccine, errs_no_vaccine = get_coefs_and_errs(
-        table=table_no_vaccine, attribute_keys= attribute_keys)
-
-    # get coefficient estimates and errors for with vaccine scenario
-    estimates_vaccine, errs_vaccine = get_coefs_and_errs(
-        table=table_vaccine, attribute_keys=attribute_keys)
-
-    return estimates_no_vaccine, errs_no_vaccine, estimates_vaccine, errs_vaccine
-
-
 def get_dict_estimates_and_errs_by_subgroups(
         table_no_vaccine, table_vaccine, attribute_keys, estimate_type, subgroups):
     """ Get coefficient estimates and errors for subgroups """
 
     # dictionaries
     estimates_no_vaccine, errs_no_vaccine, estimates_vaccine, errs_vaccine = {}, {}, {}, {}
+    table_no_vaccine_filtered = None
+    table_vaccine_filtered = None
 
     for group in subgroups:
 
-        table_no_vaccine_filtered = table_no_vaccine[table_no_vaccine.index.str.contains(group)]
-        table_vaccine_filtered = table_vaccine[table_vaccine.index.str.contains(group)]
+        if table_no_vaccine is not None:
+            table_no_vaccine_filtered = table_no_vaccine[table_no_vaccine.index.str.contains(group)]
+        if table_vaccine is not None:
+            table_vaccine_filtered = table_vaccine[table_vaccine.index.str.contains(group)]
 
         # update attribute keys by adding the group name
         group_attribute_keys = [key + '_' + group for key in attribute_keys]
 
         # estimates and err
         if estimate_type == 'coeff':
-            estimates_no_vaccine[group], errs_no_vaccine[group] = get_coefs_and_errs(
-                table=table_no_vaccine_filtered, attribute_keys=group_attribute_keys)
-            estimates_vaccine[group], errs_vaccine[group] = get_coefs_and_errs(
-                table=table_vaccine_filtered, attribute_keys=group_attribute_keys)
+            if table_no_vaccine is not None:
+                estimates_no_vaccine[group], errs_no_vaccine[group] = get_coefs_and_errs(
+                    table=table_no_vaccine_filtered, attribute_keys=group_attribute_keys)
+            if table_vaccine is not None:
+                estimates_vaccine[group], errs_vaccine[group] = get_coefs_and_errs(
+                    table=table_vaccine_filtered, attribute_keys=group_attribute_keys)
         elif estimate_type == 'wta':
-            estimates_no_vaccine[group], errs_no_vaccine[group]= get_wtas_and_errs(
-                table=table_no_vaccine_filtered, attribute_keys=group_attribute_keys)
-            estimates_vaccine[group], errs_vaccine[group] = get_wtas_and_errs(
-                table=table_vaccine_filtered, attribute_keys=group_attribute_keys)
+            if table_no_vaccine is not None:
+                estimates_no_vaccine[group], errs_no_vaccine[group]= get_wtas_and_errs(
+                    table=table_no_vaccine_filtered, attribute_keys=group_attribute_keys)
+            if table_vaccine is not None:
+                estimates_vaccine[group], errs_vaccine[group] = get_wtas_and_errs(
+                    table=table_vaccine_filtered, attribute_keys=group_attribute_keys)
         else:
             raise ValueError('Invalid estimate type.')
 
     return estimates_no_vaccine, errs_no_vaccine, estimates_vaccine, errs_vaccine
 
 
-def get_wtas_and_errs_by_vaccine(table_no_vaccine, table_vaccine, attribute_keys):
-    """ Get WTA estimates and errors for no vaccine and with vaccine scenarios """
 
-    estimates_no_vaccine, errs_no_vaccine = get_wtas_and_errs(
-        table=table_no_vaccine, attribute_keys=attribute_keys)
-    estimates_vaccine, errs_wtp_vaccine = get_wtas_and_errs(
-        table=table_vaccine, attribute_keys=attribute_keys)
+def get_estims_errs_by_subgroup(survey_scenario, group_name, estimate_type):
 
-    return estimates_no_vaccine, errs_no_vaccine, estimates_vaccine, errs_wtp_vaccine
+
+    # read results for vaccine and no vaccine scenarios
+    results_no_vaccine = get_table(
+        'estimates/results_{}_no_vaccine.csv'.format(group_name), if_drop_infection_rate=False)
+    results_vaccine =  get_table(
+        'estimates/results_{}_vaccine.csv'.format(group_name), if_drop_infection_rate=False)
+
+    if estimate_type == 'coeff':
+        # read coefficient estimates along with confidence intervals
+        estims_no_vaccine, errs_no_vaccine, estims_vaccine, errs_coefs_vaccine = get_dict_estimates_and_errs_by_subgroups(
+            table_no_vaccine=results_no_vaccine,
+            table_vaccine=results_vaccine,
+            attribute_keys=dict_coeff_labels.keys(),
+            subgroups=group_categories, estimate_type='coeff')
+
+    elif estimate_type == 'wta':
+        # read wtp estimates along with confidence intervals
+        estims_no_vaccine, errs_no_vaccine, estims_vaccine, errs_coefs_vaccine = get_dict_estimates_and_errs_by_subgroups(
+            table_no_vaccine=results_no_vaccine,
+            table_vaccine=results_vaccine,
+            attribute_keys=dict_wtp_labels.keys(),
+            subgroups=group_categories, estimate_type='wta')
+    else:
+        raise ValueError('Invalid estimate type')

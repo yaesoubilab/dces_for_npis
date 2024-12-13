@@ -142,3 +142,23 @@ def do_fig_by_group(
 
     plt.tight_layout(w_pad=3)
     plt.savefig('figs/{}_by_{}.png'.format(estimate_type, group_name))
+
+#
+# def do_row_of_subgroups(estimate_type, survey_scenario, subgroup_info, fig_size):
+#
+#     n_of_panels = len(subgroup_info)
+#     fig, ax = plt.subplots(1, n_of_panels, figsize=fig_size, sharey=True)
+#
+#     # populate panels
+#     for i in range(n_of_panels):
+#         ax[i].set_title('{})'.format(string.ascii_uppercase[i]), loc='left', weight='bold')
+#
+#
+#     for subgroup in subgroup_info:
+#
+#         add_to_ax(
+#             ax=ax[i],
+#             lists_of_estimates=subgroup_info[i],
+#             lists_of_errs=subgroup_info[i],
+#             x_axis_label='Coefficient Estimates',
+#             colors=)
