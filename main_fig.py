@@ -19,18 +19,18 @@ def do_main_figure():
     # read coefficient estimates along with confidence intervals
     coefs_no_vaccine, errs_no_vaccine = get_coefs_and_errs(
         table=results_no_vaccine,
-        attribute_keys=dict_coeff_labels.keys())
+        attribute_keys=DICT_COEFF_LABELS.keys())
     coefs_vaccine, errs_vaccine = get_coefs_and_errs(
         table=results_vaccine,
-        attribute_keys=dict_coeff_labels.keys())
+        attribute_keys=DICT_COEFF_LABELS.keys())
 
     # read wta estimates along with confidence intervals
     wtp_vaccine, wtp_errs_vaccine = get_wtas_and_errs(
         table=results_vaccine,
-        attribute_keys=dict_coeff_labels.keys())
+        attribute_keys=DICT_COEFF_LABELS.keys())
     wtp_no_vaccine, wtp_errs_no_vaccine = get_wtas_and_errs(
         table=results_no_vaccine,
-        attribute_keys=dict_coeff_labels.keys())
+        attribute_keys=DICT_COEFF_LABELS.keys())
 
     # plot
     fig, ax = plt.subplots(1, 2, figsize=FIG_SIZE, sharey=True)
@@ -48,7 +48,7 @@ def do_main_figure():
         x_axis_label_right='Willingness To Accept (WTA)',
         colors=['#2C5784', '#D9534F'],
         labels=['No Vaccine', 'Vaccine'],
-        y_axis_labels=dict_coeff_labels.values(),
+        y_axis_labels=DICT_COEFF_LABELS.values(),
         legend_loc='upper right',
         distance_between_bars=0.2
     )

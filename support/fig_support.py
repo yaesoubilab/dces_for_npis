@@ -14,6 +14,7 @@ def add_to_ax(ax,
               colors, legend_labels,
               y_axis_labels=None,
               title=None,
+              x_axis_range=None,
               legend_loc='upper right',
               distance_between_bars=None, ):
 
@@ -33,15 +34,16 @@ def add_to_ax(ax,
                     fmt='o', color=colors[i], ecolor=colors[i], capsize=0, alpha=0.7,
                     label=legend_labels[i])
 
-    ax.set_xlabel(x_axis_label, fontsize=12)
+    ax.set_xlabel(x_axis_label, fontsize=10)
     if y_axis_labels is not None:
         ax.set_yticks(np.arange(len(y_axis_labels)))
         ax.set_yticklabels(y_axis_labels, fontsize=10)
 
     ax.axvline(x=0, color='black', linestyle='-', linewidth=1.3)
     ax.grid(True, linestyle='--', alpha=0.7)
-    ax.legend(loc=legend_loc, fontsize=10)
-    ax.set_title(title, fontsize=14)
+    ax.legend(loc=legend_loc, fontsize=9)
+    ax.set_title(title, fontsize=12)
+    ax.set_xlim(x_axis_range)
 
 
 def add_to_2_axes(axes,
@@ -98,13 +100,13 @@ def do_fig_by_group(
     estims_no_vaccine, errs_no_vaccine = get_dict_estimates_and_errs_by_subgroups(
         survey_scenario='no vaccine',
         subgroup_name=group_name,
-        attribute_keys=dict_coeff_labels.keys(),
+        attribute_keys=DICT_COEFF_LABELS.keys(),
         subgroup_categories=group_categories, estimate_type=estimate_type)
 
     estims_vaccine, errs_coefs_vaccine = get_dict_estimates_and_errs_by_subgroups(
         survey_scenario='vaccine',
         subgroup_name=group_name,
-        attribute_keys=dict_coeff_labels.keys(),
+        attribute_keys=DICT_COEFF_LABELS.keys(),
         subgroup_categories=group_categories, estimate_type=estimate_type)
 
     # plot
@@ -126,7 +128,7 @@ def do_fig_by_group(
         x_axis_label_right=x_axis_label,
         colors=group_colors,
         labels=group_categories,
-        y_axis_labels=dict_coeff_labels.values(),
+        y_axis_labels=DICT_COEFF_LABELS.values(),
         legend_loc='upper right',
         distance_between_bars=distance_between_bars
     )
@@ -135,7 +137,7 @@ def do_fig_by_group(
     fig.savefig('figs/{}_by_{}.png'.format(estimate_type, group_name))
 
 
-def do_row_of_subgroups(estimate_type, survey_scenario, subgroup_info, fig_size):
+def do_row_of_subgroups(estimate_type, survey_scenario, subgroup_info, x_axis_range, fig_size, w_pad):
 
     n_of_panels = len(subgroup_info)
     fig, ax = plt.subplots(1, n_of_panels, figsize=fig_size, sharey=True)
@@ -150,7 +152,7 @@ def do_row_of_subgroups(estimate_type, survey_scenario, subgroup_info, fig_size)
         dict_estimates, dict_errs = get_dict_estimates_and_errs_by_subgroups(
             survey_scenario=survey_scenario,
             subgroup_name=key,
-            attribute_keys=dict_coeff_labels.keys(),
+            attribute_keys=DICT_COEFF_LABELS.keys(),
             subgroup_categories=subgroup_info[key]['group_categories'],
             estimate_type=estimate_type
         )
@@ -162,13 +164,14 @@ def do_row_of_subgroups(estimate_type, survey_scenario, subgroup_info, fig_size)
             x_axis_label='Coefficient Estimates' if estimate_type == 'coeff' else 'Willingness To Accept (WTA)',
             colors=subgroup_info[key]['group_colors'],
             legend_labels=subgroup_info[key]['group_categories'],
-            y_axis_labels=dict_coeff_labels.values(),
+            y_axis_labels=DICT_COEFF_LABELS.values(),
             title=subgroup_info[key]['title'],
+            x_axis_range=x_axis_range,
             # legend_loc='upper right',
             distance_between_bars=subgroup_info[key]['dist_between_bars']
         )
 
-    fig.tight_layout(w_pad=3)
+    fig.tight_layout(w_pad=w_pad)
     # combine keys
     group_names = '_'.join(list(subgroup_info.keys()))
     fig.savefig('figs/{}_by_{}.png'.format(estimate_type, group_names))

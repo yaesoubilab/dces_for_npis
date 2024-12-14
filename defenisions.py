@@ -3,9 +3,10 @@ import os
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
-WTP_X_RANGE = (-200, 200)
+COEFF_X_RANGE = (-0.5, 0.5)
+WTA_X_RANGE = (-200, 200)
 
-dict_coeff_labels = {
+DICT_COEFF_LABELS = {
     'Business_closures_3':  'Non-essential businesses close',
     'Business_closures_2':  'Crowded indoor venues closed',
     'Mask_mandates_4':      'Masks required in all indoor spaces',
@@ -21,6 +22,6 @@ dict_coeff_labels = {
     'Number_of_infections': 'Number of infections'
 }
 
-dict_wtp_labels = dict_coeff_labels.copy()
-del dict_wtp_labels['Number_of_infections']
+DICT_WTA_LABELS = DICT_COEFF_LABELS.copy()
+del DICT_WTA_LABELS['Number_of_infections']
 
