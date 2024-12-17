@@ -8,8 +8,8 @@ subgroup_info = {
     'gender':
         {
             'title': 'Gender',
-            'group_categories': ['Male', 'Female'],
-            'legend_labels': ['Male', 'Female'],
+            'group_categories': ['Female', 'Male'],
+            'legend_labels': ['Female', 'Male'],
             'group_colors': ['#2C5784', '#D9534F'],
             'dist_between_bars': 0.2
         },
