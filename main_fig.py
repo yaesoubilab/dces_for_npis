@@ -27,10 +27,10 @@ def do_main_figure():
     # read wta estimates along with confidence intervals
     wtp_vaccine, wtp_errs_vaccine = get_wtas_and_errs(
         table=results_vaccine,
-        attribute_keys=DICT_COEFF_LABELS.keys())
+        attribute_keys=DICT_WTA_LABELS.keys())
     wtp_no_vaccine, wtp_errs_no_vaccine = get_wtas_and_errs(
         table=results_no_vaccine,
-        attribute_keys=DICT_COEFF_LABELS.keys())
+        attribute_keys=DICT_WTA_LABELS.keys())
 
     # plot
     fig, ax = plt.subplots(1, 2, figsize=FIG_SIZE, sharey=True)

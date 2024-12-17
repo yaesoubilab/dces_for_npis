@@ -9,7 +9,7 @@ if __name__ == '__main__':
         do_fig_by_group(
             estimate_type=estimate_type,
             group_name='gender',
-            group_categories=['Male', 'Female'],
-            group_colors = ['#2C5784', '#D9534F'],
+            group_categories=['Female', 'Male'],
+            group_colors = ['#D9534F', '#2C5784'],
             distance_between_bars=0.2,
             fig_size=FIG_SIZE)
