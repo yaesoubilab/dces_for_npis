@@ -7,11 +7,19 @@ COEFF_X_RANGE = (-0.5, 0.5)
 WTA_X_RANGE = (-200, 200)
 
 SUBGROUP_INFO = {
-    'gender':
+    'age':
         {
-            'title': 'Gender',
-            'group_categories': ['Female', 'Male'],
-            'legend_labels': ['Female', 'Male'],
+            'title': 'Age',
+            'group_categories': ['<65', '65plus'],
+            'legend_labels': ['<65', '65+'],
+            'group_colors': ['#2C5784', '#D9534F'],
+            'dist_between_bars': 0.2
+        },
+    'assisted_living':
+        {
+            'title': 'Assisted Living',
+            'group_categories': ['Yes', 'No'],
+            'legend_labels': ['Yes', 'No'],
             'group_colors': ['#2C5784', '#D9534F'],
             'dist_between_bars': 0.2
         },
@@ -23,9 +31,57 @@ SUBGROUP_INFO = {
             'group_colors': ['#2C5784', '#D9534F'],
             'dist_between_bars': 0.2
         },
+    'chronic':
+        {
+            'title': 'Chronic Conditions',
+            'group_categories': ['Yes', 'No'],
+            'legend_labels': ['Yes', 'No'],
+            'group_colors': ['#2C5784', '#D9534F'],
+            'dist_between_bars': 0.2
+        },
+    'gender':
+        {
+            'title': 'Gender',
+            'group_categories': ['Female', 'Male'],
+            'legend_labels': ['Female', 'Male'],
+            'group_colors': ['#2C5784', '#D9534F'],
+            'dist_between_bars': 0.2
+        },
+    'political':
+        {
+            'title': 'Political Affiliation',
+            'group_categories': ['Democrat', 'Independent', 'Republican'],
+            'legend_labels': ['Democrat', 'Independent', 'Republican'],
+            'group_colors': ['blue', 'mediumpurple', 'red'],
+            'dist_between_bars': 0.2
+        },
+    'race':
+        {
+            'title': 'Race',
+            'group_categories': ['Black', 'White'],
+            'legend_labels': ['Black', 'White'],
+            'group_colors': ['#2C5784', '#D9534F'],
+            'dist_between_bars': 0.2
+        },
+    'residence':
+        {
+            'title': 'Residence',
+            'group_categories': ['Urban', 'Rural', 'Suburban'],
+            'legend_labels': ['Urban', 'Rural', 'Suburban'],
+            'group_colors': ['#2C5784', '#D9534F', '#FFA500'],
+            'dist_between_bars': 0.2
+        },
     'vaccination':
         {
             'title': 'Vaccine Status',
+            'group_categories': ['Yes', 'No'],
+            'legend_labels': ['Yes', 'No'],
+            'group_colors': ['#2C5784', '#D9534F'],
+            'dist_between_bars': 0.2
+        },
+    'vulnerable_contact':
+        {
+            'title': 'Vulnerable Contact',
             'group_categories': ['Yes', 'No'],
             'legend_labels': ['Yes', 'No'],
             'group_colors': ['#2C5784', '#D9534F'],

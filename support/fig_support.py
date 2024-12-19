@@ -24,8 +24,8 @@ def add_to_ax(ax,
     if distance_between_bars is None:
         diffs = [0]*n
     else:
-        diffs = np.linspace(start=-distance_between_bars/2,
-                            stop=distance_between_bars/2, num=n)
+        diffs = np.flip(np.linspace(start=-distance_between_bars/2,
+                            stop=distance_between_bars/2, num=n))
 
     for i, this_list in enumerate(lists_of_estimates):
         # plot a series of estimates
@@ -34,7 +34,7 @@ def add_to_ax(ax,
 
         ax.errorbar(this_list,
                     np.arange(len(this_list)) + diffs[i],
-                    xerr=lists_of_errs[i], fmt='o',
+                    xerr=lists_of_errs[i], fmt='none',
                     ecolor=colors[i], capsize=0, alpha=0.50)
 
         # ax.errorbar(this_list,
@@ -50,7 +50,16 @@ def add_to_ax(ax,
 
     ax.axvline(x=0, color='black', linestyle='-', linewidth=1.3)
     ax.grid(True, linestyle='--', alpha=0.7)
+
+    # Get the handles and labels from the current legend
     ax.legend(loc=legend_loc, fontsize=9)
+    # handles, labels = plt.gca().get_legend_handles_labels()
+    # # Reverse the order of handles and labels
+    # handles, labels = handles[::-1], labels[::-1]
+    # # Create a new legend with reversed order
+    # ax.legend(handles, labels, loc=legend_loc, fontsize=9)
+
+    # ax.legend(loc=legend_loc, fontsize=9)
     ax.set_title(title, fontsize=12)
     ax.set_xlim(x_axis_range)
 
