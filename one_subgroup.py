@@ -6,7 +6,10 @@ FIG_SIZE = (10, 6)
 
 if __name__ == '__main__':
 
-    for sub_group_name, info in SUBGROUP_INFO.items():
+    dict_of_info = SUBGROUP_INFO
+    dict_of_info = {key: SUBGROUP_INFO[key] for key in ['political']}
+
+    for sub_group_name, info in dict_of_info.items():
         for estimate_type in ['coeff', 'wta']:
             do_fig_by_group(
                 estimate_type=estimate_type,
