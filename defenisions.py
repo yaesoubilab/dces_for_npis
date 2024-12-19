@@ -6,6 +6,34 @@ ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 COEFF_X_RANGE = (-0.5, 0.5)
 WTA_X_RANGE = (-200, 200)
 
+SUBGROUP_INFO = {
+    'gender':
+        {
+            'title': 'Gender',
+            'group_categories': ['Female', 'Male'],
+            'legend_labels': ['Female', 'Male'],
+            'group_colors': ['#2C5784', '#D9534F'],
+            'dist_between_bars': 0.2
+        },
+    'child':
+        {
+            'title': 'Have Children',
+            'group_categories': ['Yes', 'No'],
+            'legend_labels': ['Yes', 'No'],
+            'group_colors': ['#2C5784', '#D9534F'],
+            'dist_between_bars': 0.2
+        },
+    'vaccination':
+        {
+            'title': 'Vaccine Status',
+            'group_categories': ['Yes', 'No'],
+            'legend_labels': ['Yes', 'No'],
+            'group_colors': ['#2C5784', '#D9534F'],
+            'dist_between_bars': 0.2
+        }
+}
+
+
 DICT_COEFF_LABELS = {
     'Business_closures_3':  'Non-essential businesses close',
     'Business_closures_2':  'Crowded indoor venues closed',

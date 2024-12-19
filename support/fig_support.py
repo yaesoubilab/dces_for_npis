@@ -28,11 +28,20 @@ def add_to_ax(ax,
                             stop=distance_between_bars/2, num=n)
 
     for i, this_list in enumerate(lists_of_estimates):
+        # plot a series of estimates
+        ax.scatter(this_list, np.arange(len(this_list)) + diffs[i],
+                marker='o', color=colors[i], label=legend_labels[i])
+
         ax.errorbar(this_list,
                     np.arange(len(this_list)) + diffs[i],
-                    xerr=lists_of_errs[i],
-                    fmt='o', color=colors[i], ecolor=colors[i], capsize=0, alpha=0.7,
-                    label=legend_labels[i])
+                    xerr=lists_of_errs[i], fmt='o',
+                    ecolor=colors[i], capsize=0, alpha=0.50)
+
+        # ax.errorbar(this_list,
+        #             np.arange(len(this_list)) + diffs[i],
+        #             xerr=lists_of_errs[i],
+        #             fmt='o', color=colors[i], ecolor=colors[i], capsize=0, alpha=0.75,
+        #             label=legend_labels[i])
 
     ax.set_xlabel(x_axis_label, fontsize=10)
     if y_axis_labels is not None:
@@ -53,6 +62,8 @@ def add_to_2_axes(axes,
                   lists_of_errs_right,
                   x_axis_label_left,
                   x_axis_label_right,
+                  x_axis_range_left,
+                  x_axis_range_right,
                   colors, labels,
                   y_axis_labels=None,
                   title_left=None,
@@ -66,6 +77,7 @@ def add_to_2_axes(axes,
               lists_of_errs=lists_of_errs_left,
               title=title_left,
               x_axis_label=x_axis_label_left,
+              x_axis_range=x_axis_range_left,
               colors=colors,
               legend_labels=labels,
               y_axis_labels=y_axis_labels,
@@ -77,6 +89,7 @@ def add_to_2_axes(axes,
               lists_of_errs=lists_of_errs_right,
               title=title_right,
               x_axis_label=x_axis_label_right,
+              x_axis_range=x_axis_range_right,
               colors=colors,
               legend_labels=labels,
               legend_loc=legend_loc,
@@ -85,7 +98,7 @@ def add_to_2_axes(axes,
 
 def do_fig_by_group(
         estimate_type, group_name, group_categories, group_colors,
-        distance_between_bars=0.3, fig_size=(10, 6)):
+        x_range=None, distance_between_bars=0.3, fig_size=(10, 6)):
     """
     :param estimate_type: (string) 'coeffs' or 'wtas'
     :param group_name:
@@ -100,13 +113,13 @@ def do_fig_by_group(
     estims_no_vaccine, errs_no_vaccine = get_dict_estimates_and_errs_by_subgroups(
         survey_scenario='no vaccine',
         subgroup_name=group_name,
-        attribute_keys=DICT_COEFF_LABELS.keys(),
+        attribute_keys=DICT_COEFF_LABELS.keys() if estimate_type == 'coeff' else DICT_WTA_LABELS.keys(),
         subgroup_categories=group_categories, estimate_type=estimate_type)
 
     estims_vaccine, errs_coefs_vaccine = get_dict_estimates_and_errs_by_subgroups(
         survey_scenario='vaccine',
         subgroup_name=group_name,
-        attribute_keys=DICT_COEFF_LABELS.keys(),
+        attribute_keys=DICT_COEFF_LABELS.keys() if estimate_type == 'coeff' else DICT_WTA_LABELS.keys(),
         subgroup_categories=group_categories, estimate_type=estimate_type)
 
     # plot
@@ -126,6 +139,8 @@ def do_fig_by_group(
         title_right = 'Vaccine Available',
         x_axis_label_left=x_axis_label,
         x_axis_label_right=x_axis_label,
+        x_axis_range_left= x_range,
+        x_axis_range_right= x_range,
         colors=group_colors,
         labels=group_categories,
         y_axis_labels=DICT_COEFF_LABELS.values(),
@@ -134,7 +149,7 @@ def do_fig_by_group(
     )
 
     fig.tight_layout(w_pad=3)
-    fig.savefig('figs/{}_by_{}.png'.format(estimate_type, group_name))
+    fig.savefig('figs/one_group/{}_by_{}.png'.format(estimate_type, group_name), dpi=300)
 
 
 def do_row_of_subgroups(estimate_type, survey_scenario, subgroup_info, x_axis_range, fig_size, w_pad):
@@ -174,4 +189,4 @@ def do_row_of_subgroups(estimate_type, survey_scenario, subgroup_info, x_axis_ra
     fig.tight_layout(w_pad=w_pad)
     # combine keys
     group_names = '_'.join(list(subgroup_info.keys()))
-    fig.savefig('figs/{}_by_{}.png'.format(estimate_type, group_names))
+    fig.savefig('figs/{}_by_{}.png'.format(estimate_type, group_names), dpi=300)

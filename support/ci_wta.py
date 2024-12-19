@@ -30,8 +30,8 @@ def calculate_wta_and_simulate(
     return hat_W, lower_bound, upper_bound, (upper_bound-lower_bound)/2
 
 # estimate, st_err
-n_infected = [0.009159761, 0.026958066]
-npi_attribute = [-0.082730632, 0.072118398]
+npi_attribute = [-0.080638933, 0.07070748]
+n_infected = [-0.237021223, 0.023055662]
 
 
 print('expected', npi_attribute[0] / n_infected[0])
