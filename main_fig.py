@@ -46,6 +46,8 @@ def do_main_figure():
         lists_of_errs_right=[wtp_errs_no_vaccine, wtp_errs_vaccine],
         x_axis_label_left='Coefficient Estimates',
         x_axis_label_right='Willingness To Accept (WTA)',
+        x_axis_range_left=COEFF_X_RANGE,
+        x_axis_range_right=WTA_X_RANGE,
         colors=['#2C5784', '#D9534F'],
         labels=['No Vaccine', 'Vaccine'],
         y_axis_labels=DICT_COEFF_LABELS.values(),

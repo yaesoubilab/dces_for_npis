@@ -113,6 +113,7 @@ def do_fig_by_group(
     :param group_name:
     :param group_categories:
     :param group_colors:
+    :param x_range: (list) range of x-axis
     :param distance_between_bars:
     :param fig_size:
     :return:
