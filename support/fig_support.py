@@ -16,7 +16,9 @@ def add_to_ax(ax,
               title=None,
               x_axis_range=None,
               legend_loc='upper right',
-              distance_between_bars=None, ):
+              distance_between_bars=None,
+              legend_pad=None,
+              title_pad=None):
 
     # number of lists
     n = len(lists_of_estimates)
@@ -37,12 +39,6 @@ def add_to_ax(ax,
                     xerr=lists_of_errs[i], fmt='none',
                     ecolor=colors[i], capsize=0, alpha=0.50)
 
-        # ax.errorbar(this_list,
-        #             np.arange(len(this_list)) + diffs[i],
-        #             xerr=lists_of_errs[i],
-        #             fmt='o', color=colors[i], ecolor=colors[i], capsize=0, alpha=0.75,
-        #             label=legend_labels[i])
-
     ax.set_xlabel(x_axis_label, fontsize=10)
     if y_axis_labels is not None:
         ax.set_yticks(np.arange(len(y_axis_labels)))
@@ -51,17 +47,17 @@ def add_to_ax(ax,
     ax.axvline(x=0, color='black', linestyle='-', linewidth=1.3)
     ax.grid(True, linestyle='--', alpha=0.7)
 
-    # Get the handles and labels from the current legend
-    ax.legend(loc=legend_loc, fontsize=9)
-    # handles, labels = plt.gca().get_legend_handles_labels()
-    # # Reverse the order of handles and labels
-    # handles, labels = handles[::-1], labels[::-1]
-    # # Create a new legend with reversed order
-    # ax.legend(handles, labels, loc=legend_loc, fontsize=9)
+    # add legend to the top of the figure
+    ax.legend(loc=legend_loc,
+              bbox_to_anchor=None if legend_pad is None else (0.5, legend_pad),
+              ncol=1, fontsize=9)
 
     # ax.legend(loc=legend_loc, fontsize=9)
-    ax.set_title(title, fontsize=12)
+    ax.set_title(title, pad=title_pad, fontsize=11)
     ax.set_xlim(x_axis_range)
+
+    # delete the first and last x-axis labels
+    ax.set_xticks(ax.get_xticks()[1:-1])
 
 
 def add_to_2_axes(axes,
@@ -162,14 +158,7 @@ def do_fig_by_group(
     fig.savefig('figs/one_group/{}_by_{}.png'.format(estimate_type, group_name), dpi=300)
 
 
-def do_row_of_subgroups(estimate_type, survey_scenario, subgroup_info, x_axis_range, fig_size, w_pad):
-
-    n_of_panels = len(subgroup_info)
-    fig, ax = plt.subplots(1, n_of_panels, figsize=fig_size, sharey=True)
-
-    # populate panels
-    for i in range(n_of_panels):
-        ax[i].set_title('{})'.format(string.ascii_uppercase[i]), loc='left', weight='bold')
+def add_subgroups_to_row(axes, survey_scenario, subgroup_info, estimate_type, x_axis_range):
 
     for i, key in enumerate(subgroup_info):
 
@@ -183,7 +172,7 @@ def do_row_of_subgroups(estimate_type, survey_scenario, subgroup_info, x_axis_ra
         )
 
         add_to_ax(
-            ax=ax[i],
+            ax=axes[i],
             lists_of_estimates=list(dict_estimates.values()),
             lists_of_errs=list(dict_errs.values()),
             x_axis_label='Coefficient Estimates' if estimate_type == 'coeff' else 'Willingness To Accept (WTA)',
@@ -196,7 +185,21 @@ def do_row_of_subgroups(estimate_type, survey_scenario, subgroup_info, x_axis_ra
             distance_between_bars=subgroup_info[key]['dist_between_bars']
         )
 
+
+
+def do_row_of_subgroups(estimate_type, survey_scenario, subgroup_info, x_axis_range, fig_size, w_pad):
+
+    n_of_panels = len(subgroup_info)
+    fig, ax = plt.subplots(1, n_of_panels, figsize=fig_size, sharey=True)
+
+    # populate panels
+    for i in range(n_of_panels):
+        ax[i].set_title('{})'.format(string.ascii_uppercase[i]), loc='left', weight='bold')
+
+    add_subgroups_to_row(axes=ax, survey_scenario=survey_scenario, subgroup_info=subgroup_info,
+                         estimate_type=estimate_type, x_axis_range=x_axis_range)
+
     fig.tight_layout(w_pad=w_pad)
     # combine keys
     group_names = '_'.join(list(subgroup_info.keys()))
-    fig.savefig('figs/{}_by_{}.png'.format(estimate_type, group_names), dpi=300)
+    fig.savefig('figs/row_of_groups/{}_by_{}.png'.format(estimate_type, group_names), dpi=300)
