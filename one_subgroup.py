@@ -15,6 +15,7 @@ if __name__ == '__main__':
                 estimate_type=estimate_type,
                 group_name=sub_group_name,
                 group_categories=info['group_categories'],
+                legend_labels=info['legend_labels'],
                 group_colors=info['group_colors'],
                 x_range= COEFF_X_RANGE if estimate_type == 'coeff' else WTA_X_RANGE,
                 distance_between_bars=info['dist_between_bars'],

@@ -10,7 +10,9 @@ TITLE_PAD = 51 # to move the title up
 
 if __name__ == '__main__':
 
-    dict_of_info = {key: SUBGROUP_INFO[key] for key in ['age', 'gender', 'race', 'child', 'political']}
+    dict_of_info = {key: SUBGROUP_INFO[key] for key in
+                    ['age', 'gender', 'race', 'child',
+                     'vaccination', 'chronic', 'residence', 'political']}
 
     for estimate_type in ['coeff', 'wta']:
         do_matrix_of_subgroups(

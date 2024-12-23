@@ -49,7 +49,7 @@ def do_main_figure():
         x_axis_range_left=COEFF_X_RANGE,
         x_axis_range_right=WTA_X_RANGE,
         colors=['#2C5784', '#D9534F'],
-        labels=['No Vaccine', 'Vaccine'],
+        legend_labels=['No Vaccine', 'Vaccine'],
         y_axis_labels=DICT_COEFF_LABELS.values(),
         legend_loc='upper right',
         distance_between_bars=0.2

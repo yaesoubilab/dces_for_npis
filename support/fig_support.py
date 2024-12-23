@@ -69,7 +69,7 @@ def add_to_2_axes(axes,
                   x_axis_label_right,
                   x_axis_range_left,
                   x_axis_range_right,
-                  colors, labels,
+                  colors, legend_labels,
                   y_axis_labels=None,
                   title_left=None,
                   title_right=None,
@@ -84,7 +84,7 @@ def add_to_2_axes(axes,
               x_axis_label=x_axis_label_left,
               x_axis_range=x_axis_range_left,
               colors=colors,
-              legend_labels=labels,
+              legend_labels=legend_labels,
               y_axis_labels=y_axis_labels,
               distance_between_bars=distance_between_bars)
 
@@ -96,19 +96,20 @@ def add_to_2_axes(axes,
               x_axis_label=x_axis_label_right,
               x_axis_range=x_axis_range_right,
               colors=colors,
-              legend_labels=labels,
+              legend_labels=legend_labels,
               legend_loc=legend_loc,
               distance_between_bars=distance_between_bars)
 
 
 def do_fig_by_group(
-        estimate_type, group_name, group_categories, group_colors,
+        estimate_type, group_name, group_categories, group_colors, legend_labels=None,
         x_range=None, distance_between_bars=0.3, fig_size=(10, 6)):
     """
     :param estimate_type: (string) 'coeffs' or 'wtas'
     :param group_name:
     :param group_categories:
     :param group_colors:
+    :param legend_labels:
     :param x_range: (list) range of x-axis
     :param distance_between_bars:
     :param fig_size:
@@ -148,7 +149,7 @@ def do_fig_by_group(
         x_axis_range_left= x_range,
         x_axis_range_right= x_range,
         colors=group_colors,
-        labels=group_categories,
+        legend_labels=group_categories if legend_labels is None else legend_labels,
         y_axis_labels=DICT_COEFF_LABELS.values(),
         legend_loc='upper right',
         distance_between_bars=distance_between_bars
@@ -183,7 +184,7 @@ def add_subgroups_to_row(axes, survey_scenario, subgroup_info, estimate_type, x_
             lists_of_errs=list(dict_errs.values()),
             x_axis_label=x_axis_label,
             colors=subgroup_info[key]['group_colors'],
-            legend_labels=subgroup_info[key]['group_categories'],
+            legend_labels=subgroup_info[key]['legend_labels'],
             y_axis_labels=DICT_COEFF_LABELS.values(),
             title=subgroup_info[key]['title'],
             x_axis_range=x_axis_range,
