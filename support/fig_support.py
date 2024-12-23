@@ -158,7 +158,8 @@ def do_fig_by_group(
     fig.savefig('figs/one_group/{}_by_{}.png'.format(estimate_type, group_name), dpi=300)
 
 
-def add_subgroups_to_row(axes, survey_scenario, subgroup_info, estimate_type, x_axis_range):
+def add_subgroups_to_row(axes, survey_scenario, subgroup_info, estimate_type, x_axis_range,
+                         legend_pad=None, title_pad=None):
 
     for i, key in enumerate(subgroup_info):
 
@@ -181,13 +182,16 @@ def add_subgroups_to_row(axes, survey_scenario, subgroup_info, estimate_type, x_
             y_axis_labels=DICT_COEFF_LABELS.values(),
             title=subgroup_info[key]['title'],
             x_axis_range=x_axis_range,
-            # legend_loc='upper right',
+            legend_loc='upper center',
+            legend_pad=legend_pad,
+            title_pad=title_pad,
             distance_between_bars=subgroup_info[key]['dist_between_bars']
         )
 
 
 
-def do_row_of_subgroups(estimate_type, survey_scenario, subgroup_info, x_axis_range, fig_size, w_pad):
+def do_row_of_subgroups(estimate_type, survey_scenario, subgroup_info, x_axis_range,
+                        fig_size, w_pad, legend_pad=None, title_pad=None):
 
     n_of_panels = len(subgroup_info)
     fig, ax = plt.subplots(1, n_of_panels, figsize=fig_size, sharey=True)
@@ -197,9 +201,35 @@ def do_row_of_subgroups(estimate_type, survey_scenario, subgroup_info, x_axis_ra
         ax[i].set_title('{})'.format(string.ascii_uppercase[i]), loc='left', weight='bold')
 
     add_subgroups_to_row(axes=ax, survey_scenario=survey_scenario, subgroup_info=subgroup_info,
-                         estimate_type=estimate_type, x_axis_range=x_axis_range)
+                         estimate_type=estimate_type, x_axis_range=x_axis_range,
+                         legend_pad=legend_pad, title_pad=title_pad)
 
     fig.tight_layout(w_pad=w_pad)
     # combine keys
     group_names = '_'.join(list(subgroup_info.keys()))
     fig.savefig('figs/row_of_groups/{}_by_{}.png'.format(estimate_type, group_names), dpi=300)
+
+
+def do_matrix_of_subgroups(estimate_type, survey_scenario, subgroup_info, x_axis_range, fig_size, w_pad):
+
+    n_of_panels = len(subgroup_info)
+    fig, ax = plt.subplots(n_of_panels, n_of_panels, figsize=fig_size, sharey=True)
+
+    # populate panels
+    for i in range(n_of_panels):
+        ax[i, 0].set_ylabel('{}'.format(subgroup_info[list(subgroup_info.keys())[i]]['title']), fontsize=11)
+        ax[i, 0].yaxis.set_label_position('left')
+        ax[i, 0].yaxis.tick_left()
+
+        for j in range(n_of_panels):
+            ax[n_of_panels - 1, j].set_xlabel('{}'.format(subgroup_info[list(subgroup_info.keys())[j]]['title']), fontsize=11)
+            ax[n_of_panels - 1, j].xaxis.set_label_position('bottom')
+            ax[n_of_panels - 1, j].xaxis.tick_bottom()
+
+    add_subgroups_to_row(axes=ax[0, :], survey_scenario=survey_scenario, subgroup_info=subgroup_info,
+                         estimate_type=estimate_type, x_axis_range=x_axis_range)
+
+    fig.tight_layout(w_pad=w_pad)
+    # combine keys
+    group_names = '_'.join(list(subgroup_info.keys()))
+    fig.savefig('figs/matrix_of_groups/{}_by_{}.png'.format(est_type, group_names), dpi=300)
