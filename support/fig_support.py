@@ -43,9 +43,6 @@ def add_to_ax(ax,
     if y_axis_labels is not None:
         ax.set_yticks(np.arange(len(y_axis_labels)))
         ax.set_yticklabels(y_axis_labels, fontsize=10)
-    else:
-        ax.set_yticks([])
-
 
     ax.axvline(x=0, color='black', linestyle='-', linewidth=1.3)
     ax.grid(True, linestyle='--', alpha=0.7)
