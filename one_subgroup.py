@@ -1,7 +1,8 @@
 from defenisions import SUBGROUP_INFO, COEFF_X_RANGE, WTA_X_RANGE
-from support.fig_support import do_fig_by_group
+from support.fig_support import do_fig_by_group, do_coeff_and_wta_of_a_subgroup
 
-FIG_SIZE = (10, 6)
+FIG_SIZE_ROW = (10, 6)
+FIG_SIZE_SQUARE = (10, 10)
 
 
 if __name__ == '__main__':
@@ -19,4 +20,12 @@ if __name__ == '__main__':
                 group_colors=info['group_colors'],
                 x_range= COEFF_X_RANGE if estimate_type == 'coeff' else WTA_X_RANGE,
                 distance_between_bars=info['dist_between_bars'],
-                fig_size=FIG_SIZE)
+                fig_size=FIG_SIZE_ROW)
+
+        do_coeff_and_wta_of_a_subgroup(
+            subgroup_name=sub_group_name,
+            subgroup_info=info,
+            coeff_x_axis_range=COEFF_X_RANGE,
+            wta_x_axis_range=WTA_X_RANGE,
+            fig_size=FIG_SIZE_SQUARE,
+            w_pad=2)

@@ -43,6 +43,9 @@ def add_to_ax(ax,
     if y_axis_labels is not None:
         ax.set_yticks(np.arange(len(y_axis_labels)))
         ax.set_yticklabels(y_axis_labels, fontsize=10)
+    else:
+        ax.set_yticks([])
+
 
     ax.axvline(x=0, color='black', linestyle='-', linewidth=1.3)
     ax.grid(True, linestyle='--', alpha=0.7)
@@ -195,7 +198,6 @@ def add_subgroups_to_row(axes, survey_scenario, subgroup_info, estimate_type, x_
         )
 
 
-
 def do_row_of_subgroups(estimate_type, survey_scenario, subgroup_info, x_axis_range,
                         fig_size, w_pad, legend_pad=None, title_pad=None):
 
@@ -214,6 +216,68 @@ def do_row_of_subgroups(estimate_type, survey_scenario, subgroup_info, x_axis_ra
     # combine keys
     group_names = '_'.join(list(subgroup_info.keys()))
     fig.savefig('figs/row_of_groups/{}_by_{}.png'.format(estimate_type, group_names), dpi=300)
+
+
+def do_coeff_and_wta_of_a_subgroup(subgroup_name, subgroup_info,
+                                   coeff_x_axis_range, wta_x_axis_range,
+                                   fig_size, w_pad=None, legend_pad=None, title_pad=None):
+    """
+
+    """
+    fig, axes = plt.subplots(2, 2, figsize=fig_size)
+
+    # populate panels
+    for i in range(4):
+        axes.ravel()[i].set_title('{})'.format(string.ascii_uppercase[i]), loc='left', weight='bold')
+
+    for row_index, estimate_type in enumerate(['coeff', 'wta']):
+
+        # get estimates and errors
+        estims_no_vaccine, errs_no_vaccine = get_dict_estimates_and_errs_by_subgroups(
+            survey_scenario='no vaccine',
+            subgroup_name=subgroup_name,
+            attribute_keys=DICT_COEFF_LABELS.keys() if estimate_type == 'coeff' else DICT_WTA_LABELS.keys(),
+            subgroup_categories=subgroup_info['group_categories'], estimate_type=estimate_type)
+
+        estims_vaccine, errs_coefs_vaccine = get_dict_estimates_and_errs_by_subgroups(
+            survey_scenario='vaccine',
+            subgroup_name=subgroup_name,
+            attribute_keys=DICT_COEFF_LABELS.keys() if estimate_type == 'coeff' else DICT_WTA_LABELS.keys(),
+            subgroup_categories=subgroup_info['group_categories'], estimate_type=estimate_type)
+
+        add_to_2_axes(
+            axes=axes[row_index],
+            lists_of_estimates_left=list(estims_no_vaccine.values()),
+            lists_of_errs_left=list(errs_no_vaccine.values()),
+            lists_of_estimates_right=list(estims_vaccine.values()),
+            lists_of_errs_right=list(errs_coefs_vaccine.values()),
+            title_left='Vaccine Not Available',
+            title_right='Vaccine Available',
+            x_axis_label_left='Coefficient Estimates' if estimate_type == 'coeff' else 'Willingness To Accept (WTA)',
+            x_axis_label_right='Coefficient Estimates' if estimate_type == 'coeff' else 'Willingness To Accept (WTA)',
+            x_axis_range_left=coeff_x_axis_range if estimate_type == 'coeff' else wta_x_axis_range,
+            x_axis_range_right=coeff_x_axis_range if estimate_type == 'coeff' else wta_x_axis_range,
+            colors=subgroup_info['group_colors'],
+            legend_labels=subgroup_info['legend_labels'],
+            y_axis_labels=DICT_COEFF_LABELS.values() if estimate_type == 'coeff' else DICT_WTA_LABELS.values(),
+            legend_loc='upper right',
+            distance_between_bars=subgroup_info['dist_between_bars']
+        )
+
+        # get ticks from the left panel
+        axes[row_index][1].set_yticks(axes[row_index][0].get_yticks())
+        axes[row_index][1].set_yticklabels([])
+
+        # remove labels from the right column
+        # axes[1].set_ylabel('')
+
+        # # Set the same y-axis limits for both rows
+        # y_limits = [min(ax.get_ylim()[0] for ax in axes.ravel()), max(ax.get_ylim()[1] for ax in axes.ravel())]
+        # for ax in axes.ravel():
+        #     ax.set_ylim(y_limits)
+
+    fig.tight_layout(w_pad=w_pad)
+    fig.savefig('figs/one_group/coeff_wta_by_{}.png'.format(subgroup_name), dpi=300)
 
 
 def do_matrix_of_subgroups( n_rows, n_cols,
