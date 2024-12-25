@@ -91,7 +91,7 @@ SUBGROUP_INFO = {
 
 
 DICT_COEFF_LABELS = {
-    'Business_closures_3':  'Non-essential businesses close',
+    'Business_closures_3':  'Non-essential businesses closed',
     'Business_closures_2':  'Crowded indoor venues closed',
     'Mask_mandates_4':      'Masks required in all indoor spaces',
     'Mask_mandates_3':      'Masks required in indoor spaces\n(excluding schools)',
