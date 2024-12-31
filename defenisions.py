@@ -34,9 +34,9 @@ SUBGROUP_INFO = {
     'chronic':
         {
             'title': 'Chronic Conditions',
-            'group_categories': ['Yes', 'No'],
-            'legend_labels': ['Yes', 'No'],
-            'group_colors': ['#2C5784', '#D9534F'],
+            'group_categories': ['Yes', 'No', 'Prefer not to answer'],
+            'legend_labels': ['Yes', 'No', 'Prefer NA'],
+            'group_colors': ['#2C5784', '#D9534F', 'darkseagreen'],
             'dist_between_bars': 0.2
         },
     'gender':
@@ -55,6 +55,14 @@ SUBGROUP_INFO = {
             'group_colors': ['#2C5784', 'darkseagreen', '#D9534F'],
             'dist_between_bars': 0.2
         },
+    'income':
+        {
+            'title': 'Income',
+            'group_categories': ['<35,000', '35,000 - 75,000', '> 150,000'],
+            'legend_labels': ['<35k', '35-75k', '>75k'],
+            'group_colors': ['#2C5784', 'darkseagreen', '#D9534F'],
+            'dist_between_bars': 0.2
+        },
     'race':
         {
             'title': 'Race',
@@ -66,9 +74,9 @@ SUBGROUP_INFO = {
     'residence':
         {
             'title': 'Residence',
-            'group_categories': ['Urban', 'Rural', 'Suburban'],
-            'legend_labels': ['Urban', 'Rural', 'Suburban'],
-            'group_colors': ['#2C5784', '#D9534F', '#FFA500'],
+            'group_categories': ['Urban', 'Suburban', 'Rural'],
+            'legend_labels': ['Urban', 'Suburban', 'Rural'],
+            'group_colors': ['#2C5784', '#FFA500', '#D9534F'],
             'dist_between_bars': 0.2
         },
     'vaccination':

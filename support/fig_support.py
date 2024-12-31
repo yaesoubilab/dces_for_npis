@@ -303,4 +303,4 @@ def do_matrix_of_subgroups( n_rows, n_cols,
     fig.tight_layout(w_pad=w_pad)
     # combine keys
     group_names = '_'.join(list(subgroup_info.keys()))
-    fig.savefig('figs/matrix_of_groups/{}_by_{}.png'.format(estimate_type, group_names), dpi=300)
+    fig.savefig('figs/matrix_of_groups/{}_{}_by_{}.png'.format(survey_scenario, estimate_type, group_names), dpi=300)
