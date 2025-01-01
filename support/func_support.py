@@ -1,3 +1,4 @@
+import numpy as np
 import pandas as pd
 
 
@@ -25,11 +26,28 @@ def get_coefs_and_errs(table, attribute_keys):
 def get_wtas_and_errs(table, attribute_keys):
     """ Get WTA estimates and errors """
 
+    infection_coeff = table['Value'].loc['Number_of_infections']
+
     # get wtp estimates and errors
     wtas = table['WTP_mean'].loc[attribute_keys]*100
     errs = [
         wtas - table['WTP_CI_lower'].loc[attribute_keys]*100,
         table['WTP_CI_upper'].loc[attribute_keys]*100 - wtas]
+
+    for i in range(len(wtas)):
+        if infection_coeff < 0:
+            if wtas.iloc[i] < 0:
+                errs[0].iloc[i] = 0
+                upper = wtas.iloc[i] + errs[1].iloc[i]
+                errs[1].iloc[i] = max(0, upper)
+                wtas.iloc[i] = 0
+            else:
+                lower = wtas.iloc[i] - errs[0].iloc[i]
+                errs[0].iloc[i] = wtas.iloc[i] - max(0, lower)
+        elif infection_coeff >= 0 and wtas.iloc[i] > 0:
+            wtas.iloc[i] = np.inf
+            errs[0].iloc[i] = np.inf
+            errs[1].iloc[i] = np.inf
 
     return wtas, errs
 
