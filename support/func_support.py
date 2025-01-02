@@ -23,10 +23,10 @@ def get_coefs_and_errs(table, attribute_keys):
     return estimates, errs
 
 
-def get_wtas_and_errs(table, attribute_keys):
+def get_wtas_and_errs(table, attribute_keys, num_infection_suffix):
     """ Get WTA estimates and errors """
 
-    infection_coeff = table['Value'].loc['Number_of_infections']
+    infection_coeff = table['Value'].loc['Number_of_infections'+num_infection_suffix]
 
     # get wtp estimates and errors
     wtas = table['WTP_mean'].loc[attribute_keys]*100
@@ -44,10 +44,14 @@ def get_wtas_and_errs(table, attribute_keys):
             else:
                 lower = wtas.iloc[i] - errs[0].iloc[i]
                 errs[0].iloc[i] = wtas.iloc[i] - max(0, lower)
-        elif infection_coeff >= 0 and wtas.iloc[i] > 0:
-            wtas.iloc[i] = np.inf
-            errs[0].iloc[i] = np.inf
-            errs[1].iloc[i] = np.inf
+        elif infection_coeff >= 0:
+            if wtas.iloc[i] > 0:
+                lower = wtas.iloc[i] - errs[0].iloc[i]
+                errs[0].iloc[i] = wtas.iloc[i] - max(0, lower)
+            else:
+                wtas.iloc[i] = np.inf
+                errs[0].iloc[i] = 0
+                errs[1].iloc[i] = 0
 
     return wtas, errs
 
@@ -99,7 +103,8 @@ def get_dict_estimates_and_errs_by_subgroups(
                 table=table_filtered, attribute_keys=group_attribute_keys)
         elif estimate_type == 'wta':
             estimates[group], errs[group]= get_wtas_and_errs(
-                table=table_filtered, attribute_keys=group_attribute_keys)
+                table=table_filtered, attribute_keys=group_attribute_keys,
+                num_infection_suffix='_{}'.format(group))
         else:
             raise ValueError('Invalid estimate type.')
 
