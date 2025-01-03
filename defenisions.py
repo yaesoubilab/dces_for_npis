@@ -6,6 +6,9 @@ ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 COEFF_X_RANGE = (-0.5, 0.5)
 WTA_X_RANGE = (-25, 225)
 
+COEFF_LABEL = 'Coefficient Estimates'
+WTA_LABEL = 'Minimum Reduction in Cases\nto Accept the NPI (Per 100 Population)'
+
 SUBGROUP_INFO = {
     'age':
         {

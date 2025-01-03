@@ -134,7 +134,7 @@ def do_fig_by_group(
     ax[0].set_title('A)', loc='left', weight='bold')
     ax[1].set_title('B)', loc='left', weight='bold')
 
-    x_axis_label = 'Coefficient Estimates' if estimate_type == 'coeff' else 'Willingness To Accept (WTA)'
+    x_axis_label = COEFF_LABEL if estimate_type == 'coeff' else WTA_LABEL
     # plot coefficient and wta estimates side by side
     add_to_2_axes(
         axes=ax,
@@ -174,7 +174,7 @@ def add_subgroups_to_row(axes, survey_scenario, subgroup_info, estimate_type, x_
         )
 
         if show_x_axis_label:
-            x_axis_label = 'Coefficient Estimates' if estimate_type == 'coeff' else 'Willingness To Accept (WTA)'
+            x_axis_label = COEFF_LABEL if estimate_type == 'coeff' else WTA_LABEL
         else:
             x_axis_label = ''
 
@@ -250,8 +250,8 @@ def do_coeff_and_wta_of_a_subgroup(subgroup_name, subgroup_info,
             lists_of_errs_right=list(errs_coefs_vaccine.values()),
             title_left='Vaccine Not Available',
             title_right='Vaccine Available',
-            x_axis_label_left='Coefficient Estimates' if estimate_type == 'coeff' else 'Willingness To Accept (WTA)',
-            x_axis_label_right='Coefficient Estimates' if estimate_type == 'coeff' else 'Willingness To Accept (WTA)',
+            x_axis_label_left=COEFF_LABEL if estimate_type == 'coeff' else WTA_LABEL,
+            x_axis_label_right=COEFF_LABEL if estimate_type == 'coeff' else WTA_LABEL,
             x_axis_range_left=coeff_x_axis_range if estimate_type == 'coeff' else wta_x_axis_range,
             x_axis_range_right=coeff_x_axis_range if estimate_type == 'coeff' else wta_x_axis_range,
             colors=subgroup_info['group_colors'],
