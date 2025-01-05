@@ -168,7 +168,7 @@ def add_subgroups_to_row(axes, survey_scenario, subgroup_info, estimate_type, x_
         dict_estimates, dict_errs = get_dict_estimates_and_errs_by_subgroups(
             survey_scenario=survey_scenario,
             subgroup_name=key,
-            attribute_keys=DICT_COEFF_LABELS.keys(),
+            attribute_keys=DICT_COEFF_LABELS.keys() if estimate_type == 'coeff' else DICT_WTA_LABELS.keys(),
             subgroup_categories=subgroup_info[key]['group_categories'],
             estimate_type=estimate_type
         )
@@ -185,7 +185,7 @@ def add_subgroups_to_row(axes, survey_scenario, subgroup_info, estimate_type, x_
             x_axis_label=x_axis_label,
             colors=subgroup_info[key]['group_colors'],
             legend_labels=subgroup_info[key]['legend_labels'],
-            y_axis_labels=DICT_COEFF_LABELS.values(),
+            y_axis_labels=DICT_COEFF_LABELS.values() if estimate_type == 'coeff' else DICT_WTA_LABELS.values(),
             title=subgroup_info[key]['title'],
             x_axis_range=x_axis_range,
             legend_loc='upper center',
