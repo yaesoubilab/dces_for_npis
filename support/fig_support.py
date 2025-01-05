@@ -292,7 +292,8 @@ def do_matrix_of_subgroups( n_rows, n_cols,
             subgroup_info= {key: subgroup_info[key] for key in
                             list(subgroup_info.keys())[k:k+n_cols_in_this_row]},
             estimate_type=estimate_type, x_axis_range=x_axis_range,
-            legend_pad=legend_pad, title_pad=title_pad)
+            legend_pad=legend_pad, title_pad=title_pad,
+            show_x_axis_label=False)
 
         if n_cols_in_this_row < n_cols:
             for j in range(n_cols_in_this_row, n_cols):
@@ -300,7 +301,16 @@ def do_matrix_of_subgroups( n_rows, n_cols,
 
         k += n_cols
 
-    fig.tight_layout(w_pad=w_pad)
+    # add x-axis label to the last row
+    fig.text(0.56 if estimate_type == 'coeff' else 0.37,
+             0.52,
+             COEFF_LABEL.replace("\n", " ") if estimate_type == 'coeff' else WTA_LABEL.replace("\n", " "),
+             fontsize=12)
+
+    fig.supxlabel(COEFF_LABEL.replace("\n", " ") if estimate_type == 'coeff' else WTA_LABEL.replace("\n", " "),
+                  fontsize=12, x=0.65, y=0.02)
+
+    fig.tight_layout(w_pad=w_pad, h_pad=4)
     # combine keys
     group_names = '_'.join(list(subgroup_info.keys()))
     fig.savefig('figs/matrix_of_groups/{}_{}_by_{}.png'.format(survey_scenario, estimate_type, group_names), dpi=300)
