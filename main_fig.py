@@ -10,10 +10,10 @@ def do_main_figure():
 
     # read results for vaccine and no vaccine scenarios
     results_no_vaccine = get_table(
-        file_path='estimates/results_drop_first_level_no_vaccine_WTP.csv',
+        file_path='estimates/results_entire_pop_no_vaccine.csv',
         if_drop_infection_rate=False)
     results_vaccine = get_table(
-        file_path='estimates/results_drop_first_level_vaccine_WTP.csv',
+        file_path='estimates/results_entire_pop_vaccine.csv',
         if_drop_infection_rate=False)
 
     # read coefficient estimates along with confidence intervals
