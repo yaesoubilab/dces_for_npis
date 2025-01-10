@@ -42,8 +42,13 @@ def get_wtas_and_errs(table, attribute_keys, num_infection_suffix):
                 errs[1].iloc[i] = max(0, upper)
                 wtas.iloc[i] = 0
             else:
-                lower = wtas.iloc[i] - errs[0].iloc[i]
-                errs[0].iloc[i] = wtas.iloc[i] - max(0, lower)
+                if wtas.iloc[i] > 200:
+                    wtas.iloc[i] = np.inf
+                    errs[0].iloc[i] = 0
+                    errs[1].iloc[i] = 0
+                else:
+                    lower = wtas.iloc[i] - errs[0].iloc[i]
+                    errs[0].iloc[i] = wtas.iloc[i] - max(0, lower)
         elif infection_coeff >= 0:
             # if wtas.iloc[i] > 0:
             #     lower = wtas.iloc[i] - errs[0].iloc[i]

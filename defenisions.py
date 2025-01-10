@@ -7,10 +7,12 @@ COEFF_X_RANGE = (-0.5, 0.5)
 WTA_X_RANGE = (-25, 225)
 
 COEFF_LABEL = 'Coefficient Estimates'
-WTA_LABEL = 'Minimum Reduction in Cases\nto Accept the NPI (Per 100 Population)'
+WTA_LABEL = 'Willingness to Accept (Reduction in Cases Per 100 Population)'
+    # 'Minimum Reduction in Cases\nPer 100 Population to Accept an NPI'
+    # 'Minimum Effectiveness to be Acceptable\n (Reduction in Cases Per 100 Population)'
 
 COLORS = ['#2C5784', '#D9534F', 'darkseagreen']
-COLORS = ['#377eb8', '#ff7f00', '#984ea3', '#4daf4a' ] # blue, orange, purple, green
+COLORS = ['#377eb8', '#ff7f00', '#4daf4a' ] # blue, orange, purple, green
 # COLORS = ['#17becf', '#e377c2', '#bcbd22'] # cyan, magenta, yellow
 
 SUBGROUP_INFO = {
@@ -19,7 +21,7 @@ SUBGROUP_INFO = {
             'title': 'Average\nPopulation',
             'group_categories': None,
             'legend_labels': [None],
-            'group_colors': COLORS,
+            'group_colors': ['#984ea3'],
             'dist_between_bars': 0
         },
     'age':

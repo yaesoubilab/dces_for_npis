@@ -208,7 +208,10 @@ def do_row_of_subgroups(estimate_type, survey_scenario, subgroup_info, x_axis_ra
 
     add_subgroups_to_row(axes=ax, survey_scenario=survey_scenario, subgroup_info=subgroup_info,
                          estimate_type=estimate_type, x_axis_range=x_axis_range,
-                         legend_pad=legend_pad, title_pad=title_pad)
+                         legend_pad=legend_pad, title_pad=title_pad, show_x_axis_label=False)
+
+    fig.supxlabel(COEFF_LABEL.replace("\n", " ") if estimate_type == 'coeff' else WTA_LABEL.replace("\n", " "),
+                  fontsize=11, weight='bold', x=0.65, y=0.02)
 
     fig.tight_layout(w_pad=w_pad)
     # combine keys
