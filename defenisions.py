@@ -10,6 +10,14 @@ COEFF_LABEL = 'Coefficient Estimates'
 WTA_LABEL = 'Minimum Reduction in Cases\nto Accept the NPI (Per 100 Population)'
 
 SUBGROUP_INFO = {
+    'entire_pop':
+        {
+            'title': 'Average\nPopulation',
+            'group_categories': None,
+            'legend_labels': [None],
+            'group_colors': ['blue'],
+            'dist_between_bars': 0
+        },
     'age':
         {
             'title': 'Age',
@@ -28,7 +36,7 @@ SUBGROUP_INFO = {
         },
     'child':
         {
-            'title': 'Have Children',
+            'title': 'Have\nChildren',
             'group_categories': ['Yes', 'No'],
             'legend_labels': ['Yes', 'No'],
             'group_colors': ['#2C5784', '#D9534F'],
@@ -36,7 +44,7 @@ SUBGROUP_INFO = {
         },
     'chronic':
         {
-            'title': 'Chronic Conditions',
+            'title': 'Chronic\nConditions',
             'group_categories': ['Yes', 'No', 'Prefer not to answer'],
             'legend_labels': ['Yes', 'No', 'Prefer NA'],
             'group_colors': ['#2C5784', '#D9534F', 'darkseagreen'],
@@ -52,7 +60,7 @@ SUBGROUP_INFO = {
         },
     'political':
         {
-            'title': 'Political Affiliation',
+            'title': 'Political\nAffiliation',
             'group_categories': ['Democrat', 'Independent', 'Republican'],
             'legend_labels': ['Democrat', 'Independent', 'Republican'],
             'group_colors': ['#2C5784', 'darkseagreen', '#D9534F'],
@@ -84,7 +92,7 @@ SUBGROUP_INFO = {
         },
     'vaccination':
         {
-            'title': 'Vaccine Status',
+            'title': 'Vaccine\nStatus',
             'group_categories': ['Yes', 'No'],
             'legend_labels': ['Yes', 'No'],
             'group_colors': ['#2C5784', '#D9534F'],
@@ -92,7 +100,7 @@ SUBGROUP_INFO = {
         },
     'vulnerable_contact':
         {
-            'title': 'Vulnerable Contact',
+            'title': 'Vulnerable\nContact',
             'group_categories': ['Yes', 'No'],
             'legend_labels': ['Yes', 'No'],
             'group_colors': ['#2C5784', '#D9534F'],

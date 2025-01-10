@@ -84,27 +84,39 @@ def get_dict_estimates_and_errs_by_subgroups(
     else:
         raise ValueError('Invalid survey scenario')
 
-    # update the table to include all subgroups
-    table = update_table_to_include_all_subgroups(table, subgroup_categories)
-
     # dictionaries
     estimates, errs = {}, {}
 
-    for group in subgroup_categories:
+    # update the table to include all subgroups
+    if subgroup_categories is not None:
+        table = update_table_to_include_all_subgroups(table, subgroup_categories)
 
-        table_filtered = table[table.index.str.contains(group)]
+        for group in subgroup_categories:
 
-        # update attribute keys by adding the group name
-        group_attribute_keys = [key + '_' + group for key in attribute_keys]
+            table_filtered = table[table.index.str.contains(group)]
 
-        # estimates and err
+            # update attribute keys by adding the group name
+            group_attribute_keys = [key + '_' + group for key in attribute_keys]
+
+            # estimates and err
+            if estimate_type == 'coeff':
+                estimates[group], errs[group] = get_coefs_and_errs(
+                    table=table_filtered, attribute_keys=group_attribute_keys)
+            elif estimate_type == 'wta':
+                estimates[group], errs[group]= get_wtas_and_errs(
+                    table=table_filtered, attribute_keys=group_attribute_keys,
+                    num_infection_suffix='_{}'.format(group))
+            else:
+                raise ValueError('Invalid estimate type.')
+
+    else:
+        # estimates and err and put them in a dictionary
         if estimate_type == 'coeff':
-            estimates[group], errs[group] = get_coefs_and_errs(
-                table=table_filtered, attribute_keys=group_attribute_keys)
+            estimates['average_pop'], errs['average_pop'] = get_coefs_and_errs(
+                table=table, attribute_keys=attribute_keys)
         elif estimate_type == 'wta':
-            estimates[group], errs[group]= get_wtas_and_errs(
-                table=table_filtered, attribute_keys=group_attribute_keys,
-                num_infection_suffix='_{}'.format(group))
+            estimates['average_pop'], errs['average_pop'] = get_wtas_and_errs(
+                table=table, attribute_keys=attribute_keys, num_infection_suffix='')
         else:
             raise ValueError('Invalid estimate type.')
 

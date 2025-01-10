@@ -48,12 +48,13 @@ def add_to_ax(ax,
     ax.grid(True, linestyle='--', alpha=0.7)
 
     # add legend to the top of the figure
-    ax.legend(loc=legend_loc,
-              bbox_to_anchor=None if legend_pad is None else (0.5, legend_pad),
-              ncol=1, fontsize=9)
+    if len(legend_labels) > 1:
+        ax.legend(loc=legend_loc,
+                  bbox_to_anchor=None if legend_pad is None else (0.5, legend_pad),
+                  ncol=1, fontsize=9)
 
     # ax.legend(loc=legend_loc, fontsize=9)
-    ax.set_title(title, pad=title_pad, fontsize=11, weight='bold')
+    ax.set_title(title, pad=title_pad, fontsize=10, weight='bold')
     ax.set_xlim(x_axis_range)
 
     # delete the first and last x-axis labels
@@ -265,24 +266,22 @@ def do_coeff_and_wta_of_a_subgroup(subgroup_name, subgroup_info,
         axes[row_index][1].set_yticks(axes[row_index][0].get_yticks())
         axes[row_index][1].set_yticklabels([])
 
-        # remove labels from the right column
-        # axes[1].set_ylabel('')
-
-        # # Set the same y-axis limits for both rows
-        # y_limits = [min(ax.get_ylim()[0] for ax in axes.ravel()), max(ax.get_ylim()[1] for ax in axes.ravel())]
-        # for ax in axes.ravel():
-        #     ax.set_ylim(y_limits)
-
     fig.tight_layout(w_pad=w_pad)
     fig.savefig('figs/one_group/coeff_wta_by_{}.png'.format(subgroup_name), dpi=300)
 
 
 def do_matrix_of_subgroups( n_rows, n_cols,
         estimate_type, survey_scenario, subgroup_info, x_axis_range, fig_size, w_pad,
-        legend_pad=None, title_pad=None):
+        legend_pad=None, title_pad=None, h_pad=2):
 
     # n_of_panels = len(subgroup_info)
     fig, ax = plt.subplots(nrows=n_rows, ncols=n_cols, figsize=fig_size, sharex=False, sharey=True)
+
+    # add A, B, C, labels
+    for i in range(n_rows):
+        for j in range(n_cols):
+            ax[i, j].set_title('{})'.format(string.ascii_uppercase[i*n_cols + j]),
+                               loc='left', weight='bold', fontsize=10)
 
     k = 0
     for i in range(n_rows):
@@ -301,16 +300,16 @@ def do_matrix_of_subgroups( n_rows, n_cols,
 
         k += n_cols
 
-    # add x-axis label to the last row
-    fig.text(0.56 if estimate_type == 'coeff' else 0.37,
-             0.52,
-             COEFF_LABEL.replace("\n", " ") if estimate_type == 'coeff' else WTA_LABEL.replace("\n", " "),
-             fontsize=12)
+    # # add x-axis label to the first row
+    # fig.text(0.56 if estimate_type == 'coeff' else 0.37,
+    #          0.52,
+    #          COEFF_LABEL.replace("\n", " ") if estimate_type == 'coeff' else WTA_LABEL.replace("\n", " "),
+    #          fontsize=12)
 
     fig.supxlabel(COEFF_LABEL.replace("\n", " ") if estimate_type == 'coeff' else WTA_LABEL.replace("\n", " "),
-                  fontsize=12, x=0.65, y=0.02)
+                  fontsize=11, weight='bold' , x=0.65, y=0.02)
 
-    fig.tight_layout(w_pad=w_pad, h_pad=4)
+    fig.tight_layout(w_pad=w_pad, h_pad=h_pad)
     # combine keys
     group_names = '_'.join(list(subgroup_info.keys()))
     fig.savefig('figs/matrix_of_groups/{}_{}_by_{}.png'.format(survey_scenario, estimate_type, group_names), dpi=300)
