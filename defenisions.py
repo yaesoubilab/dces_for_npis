@@ -9,13 +9,17 @@ WTA_X_RANGE = (-25, 225)
 COEFF_LABEL = 'Coefficient Estimates'
 WTA_LABEL = 'Minimum Reduction in Cases\nto Accept the NPI (Per 100 Population)'
 
+COLORS = ['#2C5784', '#D9534F', 'darkseagreen']
+COLORS = ['#377eb8', '#ff7f00', '#984ea3', '#4daf4a' ] # blue, orange, purple, green
+# COLORS = ['#17becf', '#e377c2', '#bcbd22'] # cyan, magenta, yellow
+
 SUBGROUP_INFO = {
     'entire_pop':
         {
             'title': 'Average\nPopulation',
             'group_categories': None,
             'legend_labels': [None],
-            'group_colors': ['blue'],
+            'group_colors': COLORS,
             'dist_between_bars': 0
         },
     'age':
@@ -23,7 +27,7 @@ SUBGROUP_INFO = {
             'title': 'Age',
             'group_categories': ['<65', '65plus'],
             'legend_labels': ['<65', '65+'],
-            'group_colors': ['#2C5784', '#D9534F'],
+            'group_colors': COLORS,
             'dist_between_bars': 0.2
         },
     'assisted_living':
@@ -31,7 +35,7 @@ SUBGROUP_INFO = {
             'title': 'Assisted Living',
             'group_categories': ['Yes', 'No'],
             'legend_labels': ['Yes', 'No'],
-            'group_colors': ['#2C5784', '#D9534F'],
+            'group_colors': COLORS,
             'dist_between_bars': 0.2
         },
     'child':
@@ -39,7 +43,7 @@ SUBGROUP_INFO = {
             'title': 'Have\nChildren',
             'group_categories': ['Yes', 'No'],
             'legend_labels': ['Yes', 'No'],
-            'group_colors': ['#2C5784', '#D9534F'],
+            'group_colors': COLORS,
             'dist_between_bars': 0.2
         },
     'chronic':
@@ -47,15 +51,15 @@ SUBGROUP_INFO = {
             'title': 'Chronic\nConditions',
             'group_categories': ['Yes', 'No', 'Prefer not to answer'],
             'legend_labels': ['Yes', 'No', 'Prefer NA'],
-            'group_colors': ['#2C5784', '#D9534F', 'darkseagreen'],
-            'dist_between_bars': 0.2
+            'group_colors': COLORS,
+            'dist_between_bars': 0.3
         },
     'gender':
         {
             'title': 'Gender',
             'group_categories': ['Female', 'Male'],
             'legend_labels': ['Female', 'Male'],
-            'group_colors': ['#2C5784', '#D9534F'],
+            'group_colors': COLORS,
             'dist_between_bars': 0.2
         },
     'political':
@@ -63,15 +67,15 @@ SUBGROUP_INFO = {
             'title': 'Political\nAffiliation',
             'group_categories': ['Democrat', 'Independent', 'Republican'],
             'legend_labels': ['Democrat', 'Independent', 'Republican'],
-            'group_colors': ['#2C5784', 'darkseagreen', '#D9534F'],
-            'dist_between_bars': 0.2
+            'group_colors': COLORS,
+            'dist_between_bars': 0.3
         },
     'income':
         {
             'title': 'Income',
             'group_categories': ['<35,000', '35,000 - 75,000', '> 150,000'],
             'legend_labels': ['<35k', '35-75k', '>75k'],
-            'group_colors': ['#2C5784', 'darkseagreen', '#D9534F'],
+            'group_colors': COLORS,
             'dist_between_bars': 0.2
         },
     'race':
@@ -79,7 +83,7 @@ SUBGROUP_INFO = {
             'title': 'Race',
             'group_categories': ['Black', 'White'],
             'legend_labels': ['Black', 'White'],
-            'group_colors': ['#2C5784', '#D9534F'],
+            'group_colors': COLORS,
             'dist_between_bars': 0.2
         },
     'residence':
@@ -87,15 +91,15 @@ SUBGROUP_INFO = {
             'title': 'Residence',
             'group_categories': ['Urban', 'Suburban', 'Rural'],
             'legend_labels': ['Urban', 'Suburban', 'Rural'],
-            'group_colors': ['#2C5784', '#FFA500', '#D9534F'],
-            'dist_between_bars': 0.2
+            'group_colors': COLORS,
+            'dist_between_bars': 0.3
         },
     'vaccination':
         {
             'title': 'Vaccine\nStatus',
             'group_categories': ['Yes', 'No'],
             'legend_labels': ['Yes', 'No'],
-            'group_colors': ['#2C5784', '#D9534F'],
+            'group_colors': COLORS,
             'dist_between_bars': 0.2
         },
     'vulnerable_contact':
@@ -103,7 +107,7 @@ SUBGROUP_INFO = {
             'title': 'Vulnerable\nContact',
             'group_categories': ['Yes', 'No'],
             'legend_labels': ['Yes', 'No'],
-            'group_colors': ['#2C5784', '#D9534F'],
+            'group_colors': COLORS,
             'dist_between_bars': 0.2
         }
 }
