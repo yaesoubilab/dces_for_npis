@@ -11,7 +11,6 @@ WTA_LABEL = 'Willingness to Accept (Reduction in Cases Per 100 Population)'
     # 'Minimum Reduction in Cases\nPer 100 Population to Accept an NPI'
     # 'Minimum Effectiveness to be Acceptable\n (Reduction in Cases Per 100 Population)'
 
-COLORS = ['#2C5784', '#D9534F', 'darkseagreen']
 COLORS = ['#377eb8', '#ff7f00', '#4daf4a' ] # blue, orange, purple, green
 # COLORS = ['#17becf', '#e377c2', '#bcbd22'] # cyan, magenta, yellow
 

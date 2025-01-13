@@ -7,9 +7,11 @@ def get_table(file_path, if_drop_infection_rate):
 
     table = pd.read_csv(file_path, index_col=0)
     if if_drop_infection_rate:
-        table = table.drop(['ACS2', 'SIGMA_PANEL_ASC2', 'Number_of_infections'])
+        # table = table.drop(['ACS2', 'SIGMA_PANEL_ASC2', 'Number_of_infections'])
+        table = table.drop(table.index[table.index.str.contains('ACS2|SIGMA_PANEL_ASC2|Number_of_infections')])
     else:
-        table = table.drop(['ACS2', 'SIGMA_PANEL_ASC2'])
+        # table = table.drop(['ACS2', 'SIGMA_PANEL_ASC2'])
+        table = table.drop(table.index[table.index.str.contains('ACS2|SIGMA_PANEL_ASC2')])
 
     return  table
 
