@@ -9,8 +9,8 @@ def do_lca_fig():
         estimate_type='coeff',
         group_name='LCA',
         group_categories=['class0', 'class1'],
-        legend_labels=['Infection Indifferent', 'Infection Minimizers'],
-        group_colors=COLORS,
+        legend_labels=['Infection Neutral', 'Infection Averse'],
+        group_colors=['#008080', '#B34D4D'],
         x_range=COEFF_X_RANGE,
         distance_between_bars=0.2,
         fig_size=FIG_SIZE)
