@@ -1,10 +1,8 @@
-import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
-import seaborn as sns
-import statsmodels.api as sm
 
+from analysis_support import do_logistic_regression
 from defenisions import ROOT_DIR
+from fig_support import do_correlation_analysis, plot_logistic_regression_coeffs
 
 variable_labels = ['Gender', 'Hispanic', 'Age', 'Income', 'Residence', 'Child', 'Assisted_Living',
                    'Chronic', 'Vulnerable_contact', 'Health_Insurance', 'News', 'Political',
@@ -61,7 +59,9 @@ data_reduced.loc[data_reduced['Hispanic'].isin(['No', 'nan']), 'Hispanic'] = 'No
 data_reduced.loc[data_reduced['Education'].isin(
     ['Postgraduate degree', 'Undergraduate degree', 'Associate’s degree']), 'Education'] = 'With College Degree'
 data_reduced.loc[data_reduced['Education'].isin([
-    '1 or more years of college credit, no degree', 'High school or GED', 'Some college credits']), 'Education'] = 'Without College Degree'
+    '1 or more years of college credit, no degree',
+    'High school or GED',
+    'Some college credits']), 'Education'] = 'Without College Degree'
 
 
 # one-hot encode the categorical variables
@@ -95,61 +95,11 @@ X = X.astype('float64')
 
 y = data_encoded[y_label]
 
-# correlation matrix
-correlation_matrix = X.corr()
-correlation_matrix.to_csv('correlation_matrix.csv', index=True)
+# do correlation analysis
+do_correlation_analysis(X=X)
 
-# get the maximum and minimum correlation
-np.fill_diagonal(correlation_matrix.values, np.nan)
-print('Maximum correlation:', correlation_matrix.max().max())
-print('Minimum correlation:', correlation_matrix.min().min())
-print('')
+# do logistic regression
+do_logistic_regression(X=X, y=y)
 
-plt.figure(figsize=(15, 14))
-sns.heatmap(correlation_matrix, annot=False, cmap='coolwarm')
-plt.title("Correlation Matrix Heatmap")
-plt.tight_layout()
-plt.savefig('correlation_matrix.png')
-
-# fit the model
-# add intercept
-X_with_const = sm.add_constant(X)
-model = sm.Logit(y, X_with_const)
-results = model.fit()
-
-# Display the model summary (coefficients and confidence intervals)
-print(results.summary())
-# export results to csv
-results.summary2().tables[1].to_csv('logistic.csv')
-
-# visualize
-df = pd.read_csv('logistic.csv')
-df = df.iloc[::-1]
-
-# Filter for estimates and confidence intervals
-df = df[['Unnamed: 0', 'Coef.', '[0.025', '0.975]']]
-df.columns = ['Variables','Estimate', 'CI_Lower', 'CI_Upper']
-
-# Plot estimates with confidence intervals
-fig, ax = plt.subplots(1,1, figsize=(8, 6))
-ax.errorbar(
-    x=df['Estimate'],
-    y=range(len(df['Estimate'])),
-    xerr=[df['Estimate'] - df['CI_Lower'], df['CI_Upper'] - df['Estimate']],
-    fmt='o',
-    capsize=4,
-    label='Estimate'
-)
-
-ax.axvline(x=0, color='gray', linestyle='--', linewidth=1)  # Reference line for zero
-# ax.set_title('Logistic Regression Coefficients with Confidence Intervals')
-ax.set_xlabel('Estimate')
-ax.set_yticks(np.arange(len(df['Estimate'])))
-ax.set_yticklabels(df.iloc[:,0].tolist(), fontsize=10)
-
-ax.grid(axis='x', linestyle='--', alpha=0.7)
-# ax.legend()
-fig.tight_layout()
-
-# Save the plot
-fig.savefig('logistic_regression_ci.png', dpi=300, bbox_inches='tight')
+# plot logistic regression coefficients
+plot_logistic_regression_coeffs()
