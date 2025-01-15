@@ -4,12 +4,6 @@ from analysis_support import do_logistic_regression
 from defenisions import ROOT_DIR, DICT_VARIABLES
 from fig_support import do_correlation_analysis, plot_logistic_regression_coeffs
 
-variable_labels = ['Gender', 'Hispanic', 'Age', 'Income', 'Residence', 'Child', 'Assisted_Living',
-                   'Chronic', 'Vulnerable_contact', 'Health_Insurance', 'News', 'Political',
-                   'Self_employed', 'Remote', 'Education', 'Pregnant', 'Vehicle'
-                   ]
-
-
 '''
 Race [
  'White' 
@@ -42,6 +36,7 @@ Race [
  'Asian/Asian American,Asian Indian' 'Japanese,Korean']
 '''
 
+variable_labels = list(DICT_VARIABLES.keys())
 y_label = ['Class_1']
 
 # read the data into table

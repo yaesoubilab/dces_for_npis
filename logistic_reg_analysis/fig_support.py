@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 
+from defenisions import DICT_VARIABLES
 
 
 def do_correlation_analysis(X):
@@ -24,22 +25,52 @@ def do_correlation_analysis(X):
     plt.savefig('figs/correlation_matrix.png')
 
 
-def plot_logistic_regression_coeffs():
+def plot_logistic_regression_coeffs(fig_size):
 
-    # visualize
+    # Read estimates from logistic regression
     df = pd.read_csv('results/logistic.csv')
-    df = df.iloc[::-1]
-
+    # Reverse the order of rows
+    # df = df.iloc[::-1]
     # Filter for estimates and confidence intervals
     df = df[['Unnamed: 0', 'Coef.', '[0.025', '0.975]']]
     df.columns = ['Variables', 'Estimate', 'CI_Lower', 'CI_Upper']
+    df.set_index('Variables', inplace=True)
+
+    # adjust labels to include references
+    y_labels=[]
+    estimates=[]
+    ci_l = []
+    ci_u = []
+    for var, var_details in DICT_VARIABLES.items():
+        y_labels += [var_details['label']]
+        for sub_label in var_details['sub labels']:
+            y_labels += ['   {}'.format(sub_label)]
+
+        estimates += [np.nan] # for the variable name
+        estimates += [np.nan] # for the reference value
+        ci_l += [np.nan] # for the variable name
+        ci_l += [np.nan] # for the reference value
+        ci_u += [np.nan] # for the variable name
+        ci_u += [np.nan] # for the reference value
+        for var_value in var_details['values'][1:]:
+            e = df.at['{}_{}'.format(var, var_value), 'Estimate']
+            l = df.at['{}_{}'.format(var, var_value), 'CI_Lower']
+            u = df.at['{}_{}'.format(var, var_value), 'CI_Upper']
+            estimates += [e]
+            ci_l += [e-l]
+            ci_u += [u-e]
+
+    y_labels.reverse()
+    estimates.reverse()
+    ci_l.reverse()
+    ci_u.reverse()
 
     # Plot estimates with confidence intervals
-    fig, ax = plt.subplots(1, 1, figsize=(8, 6))
+    fig, ax = plt.subplots(1, 1, figsize=fig_size)
     ax.errorbar(
-        x=df['Estimate'],
-        y=range(len(df['Estimate'])),
-        xerr=[df['Estimate'] - df['CI_Lower'], df['CI_Upper'] - df['Estimate']],
+        x=estimates,
+        y=range(len(estimates)),
+        xerr=[ci_l, ci_u],
         fmt='o',
         capsize=4,
         label='Estimate'
@@ -48,10 +79,20 @@ def plot_logistic_regression_coeffs():
     ax.axvline(x=0, color='gray', linestyle='--', linewidth=1)  # Reference line for zero
     # ax.set_title('Logistic Regression Coefficients with Confidence Intervals')
     ax.set_xlabel('Estimate')
-    ax.set_yticks(np.arange(len(df['Estimate'])))
-    ax.set_yticklabels(df.iloc[:, 0].tolist(), fontsize=10)
+    ax.set_yticks(range(len(y_labels)))
+    ax.set_yticklabels(y_labels, fontsize=10)
 
-    ax.grid(axis='x', linestyle='--', alpha=0.7)
+    left_align = True
+    if left_align:
+        # left align labels
+        for label in ax.get_yticklabels():
+            label.set_horizontalalignment('left')
+        # Adjust padding between tick labels and axis
+        ax.tick_params(axis='y', pad=180)
+
+    ax.set_ylim(-1, len(y_labels))
+
+    # ax.grid(axis='x', linestyle='--', alpha=0.7)
     # ax.legend()
     fig.tight_layout()
 
