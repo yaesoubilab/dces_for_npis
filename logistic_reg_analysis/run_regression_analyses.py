@@ -67,7 +67,7 @@ data_reduced.loc[data_reduced['Education'].isin([
 # one-hot encode the categorical variables
 data_encoded = pd.get_dummies(data_reduced, columns=variable_labels)
 
-# read two columns
+# read the coded columns
 X = data_encoded[['Gender_Male', 'Gender_Other',
                   'Hispanic_Yes',
                   'Age_≥ 65',
