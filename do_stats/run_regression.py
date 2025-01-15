@@ -91,6 +91,7 @@ X = data_encoded[['Gender_Male', 'Gender_Other',
                   'News_Other',
                   'Education_With College Degree'
                   ]]
+X = X.astype('float64')
 
 y = data_encoded[y_label]
 
@@ -111,7 +112,9 @@ plt.tight_layout()
 plt.savefig('correlation_matrix.png')
 
 # fit the model
-model = sm.Logit(y, X)
+# add intercept
+X_with_const = sm.add_constant(X)
+model = sm.Logit(y, X_with_const)
 results = model.fit()
 
 # Display the model summary (coefficients and confidence intervals)
