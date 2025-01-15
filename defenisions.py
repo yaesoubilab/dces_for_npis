@@ -133,3 +133,131 @@ DICT_COEFF_LABELS = {
 DICT_WTA_LABELS = DICT_COEFF_LABELS.copy()
 del DICT_WTA_LABELS['Number_of_infections']
 
+
+DICT_VARIABLES = {
+    'Gender': {
+        'label': 'Gender',
+        'values': ['Female', 'Male', 'Other'],
+        'sub labels': ['Female (Reference)', 'Male', 'Other']
+    },
+    'Hispanic': {
+        'label': 'Hispanic?',
+        'values': ['No', 'Yes'],
+        'sub labels': ['No (Reference)', 'Yes']
+    },
+    'Age': {
+        'label': 'Age',
+        'values': ['<65', '≥ 65'],
+        'sub labels': ['<65 (Reference)', '65+']
+    },
+    'Residence': {
+        'label': 'Residence',
+        'values': ['Urban', 'Suburban', 'Rural'],
+        'sub labels': ['Urban (Reference)', 'Suburban', 'Rural']
+    },
+    'Education': {
+        'label': 'Education',
+        'values': ['With College Degree', 'Without College Degree'],
+        'sub labels': ['With College Degree (Reference)', 'Without College Degree']
+    },
+    'Political': {
+        'label': 'Political Affiliation',
+        'values': ['Democrat', 'Independent', 'Republican'],
+        'sub labels': ['Democrat (Reference)', 'Independent', 'Republican']
+    },
+    'News': {
+        'label': 'News Source',
+        'values': ['Print media (newspapers, journals)',
+                   'Social media (Instagram, Facebook, X (Twitter), TikTok)',
+                   'TV (including cable)',
+                   'News apps or websites',
+                   'Radio or podcasts',
+                   'Do not read/listen/watch the news',
+                   'Other'],
+        'sub labels': ['Printed media (Reference)',
+                       'Social Media',
+                       'TV and Cable',
+                       'News Apps and Websites',
+                       'Radio and Podcasts',
+                       'Do not read/listen/watch the news',
+                       'Other']
+    },
+    'Income': {
+        'label': 'Household Income',
+        'values': ['<35,000', '$35,000 - 75,000', '$75,000 - 150,000', '> $150,000'],
+        'sub labels': ['<$35,000 (Reference)', '$35,000-75,000', '$75,000-150,000', '>$150,000']
+    },
+    'Self_employed': {
+        'label': 'Self-Employed?',
+        'values': ['Yes', 'No'],
+        'sub labels': ['Yes', 'No (Reference)']
+    },
+    'Remote': {
+        'label': 'Remote Work?',
+        'values': ['Yes', 'No', 'NA (studying, retired, not in paid employment)'],
+        'sub labels': ['Yes', 'No', 'Not Applicable']
+    },
+    'Vehicle': {
+        'label': 'Vehicle Ownership?',
+        'values': ['No', 'Yes'],
+        'sub labels': ['No (Reference)', 'Yes']
+    },
+    'Child': {
+        'label': 'Had School-Aged Children?',
+        'values': ['No', 'Yes'],
+        'sub labels': ['No (Reference)', 'Yes']
+    },
+    'Pregnant': {
+        'label': 'Pregnant?',
+        'values': ['No', 'Yes'],
+        'sub labels': ['No (Reference)', 'Yes']
+    },
+    'Health_Insurance': {
+        'label': 'Health Insurance?',
+        'values': ['No', 'Yes'],
+        'sub labels': ['No (Reference)', 'Yes']
+    },
+    'Assisted_Living': {
+        'label': 'Assisted Living?',
+        'values': ['No', 'Yes'],
+        'sub labels': ['No (Reference)', 'Yes']
+    },
+    'Chronic': {
+        'label': 'Chronic Conditions?',
+        'values': ['No', 'Yes', 'Prefer not to answer'],
+        'sub labels': ['No (Reference)', 'Yes', 'Prefer not to answer']
+    },
+    'Vulnerable_contact': {
+        'label': 'Vulnerable Contact?',
+        'values': ['No', 'Yes'],
+        'sub labels': ['No (Reference)', 'Yes']
+    }
+}
+
+
+
+'''
+['Gender_Male', 'Gender_Other',
+                  'Hispanic_Yes',
+                  'Age_≥ 65',
+                  'Income_$35,000 - 75,000', 'Income_$75,000 - 150,000', 'Income_> $150,000',
+                  'Residence_Suburban', 'Residence_Rural',
+                  'Child_Yes',
+                  'Assisted_Living_Yes',
+                  'Chronic_Yes','Chronic_Prefer not to answer',
+                  'Vulnerable_contact_Yes',
+                  'Health_Insurance_Yes',
+                  'Political_Republican', 'Political_Independent', 'Political_Other',
+                  'Self_employed_Yes',
+                  'Remote_Yes', 'Remote_NA (studying, retired, not in paid employment)',
+                  'Pregnant_Yes',
+                  'Vehicle_Yes',
+                  'News_Social media (Instagram, Facebook, X (Twitter), TikTok)',
+                  'News_TV (including cable)',
+                  'News_News apps or websites',
+                  'News_Radio or podcasts',
+                  'News_Do not read/listen/watch the news',
+                  'News_Other',
+                  'Education_With College Degree'
+                  ]
+                  '''

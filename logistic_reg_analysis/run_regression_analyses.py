@@ -1,7 +1,7 @@
 import pandas as pd
 
 from analysis_support import do_logistic_regression
-from defenisions import ROOT_DIR
+from defenisions import ROOT_DIR, DICT_VARIABLES
 from fig_support import do_correlation_analysis, plot_logistic_regression_coeffs
 
 variable_labels = ['Gender', 'Hispanic', 'Age', 'Income', 'Residence', 'Child', 'Assisted_Living',
@@ -67,30 +67,14 @@ data_reduced.loc[data_reduced['Education'].isin([
 # one-hot encode the categorical variables
 data_encoded = pd.get_dummies(data_reduced, columns=variable_labels)
 
+# find the list of encoded variable names
+labels_of_coded_variables = []
+for var, var_details in DICT_VARIABLES.items():
+    labels_of_coded_variables += [var+'_'+label for label in var_details['values'][1:]]
+
 # read the coded columns
-X = data_encoded[['Gender_Male', 'Gender_Other',
-                  'Hispanic_Yes',
-                  'Age_≥ 65',
-                  'Income_$35,000 - 75,000', 'Income_$75,000 - 150,000', 'Income_> $150,000',
-                  'Residence_Suburban', 'Residence_Rural',
-                  'Child_Yes',
-                  'Assisted_Living_Yes',
-                  'Chronic_Yes','Chronic_Prefer not to answer',
-                  'Vulnerable_contact_Yes',
-                  'Health_Insurance_Yes',
-                  'Political_Republican', 'Political_Independent', 'Political_Other',
-                  'Self_employed_Yes',
-                  'Remote_Yes', 'Remote_NA (studying, retired, not in paid employment)',
-                  'Pregnant_Yes',
-                  'Vehicle_Yes',
-                  'News_Social media (Instagram, Facebook, X (Twitter), TikTok)',
-                  'News_TV (including cable)',
-                  'News_News apps or websites',
-                  'News_Radio or podcasts',
-                  'News_Do not read/listen/watch the news',
-                  'News_Other',
-                  'Education_With College Degree'
-                  ]]
+X = data_encoded[labels_of_coded_variables]
+
 X = X.astype('float64')
 
 y = data_encoded[y_label]
