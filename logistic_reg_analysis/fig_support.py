@@ -71,7 +71,7 @@ def get_estimates_and_ci(vaccine_scenario):
     for var, var_details in DICT_VARIABLES.items():
         y_labels += [var_details['label']]
         for sub_label in var_details['sub labels']:
-            y_labels += ['   {}'.format(sub_label)]
+            y_labels += ['    {}'.format(sub_label)]
 
         estimates += [np.nan]  # for the variable name
         estimates += [np.nan]  # for the reference value
