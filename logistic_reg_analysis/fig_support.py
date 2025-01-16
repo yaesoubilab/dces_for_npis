@@ -6,7 +6,7 @@ import seaborn as sns
 from defenisions import DICT_VARIABLES
 
 
-def do_correlation_analysis(X):
+def do_correlation_analysis(X, vaccine_scenario):
 
     # correlation matrix
     correlation_matrix = X.corr()
@@ -22,13 +22,13 @@ def do_correlation_analysis(X):
     sns.heatmap(correlation_matrix, annot=False, cmap='coolwarm')
     plt.title("Correlation Matrix Heatmap")
     plt.tight_layout()
-    plt.savefig('figs/correlation_matrix.png')
+    plt.savefig('figs/correlation_matrix_{}.png'.format(vaccine_scenario), dpi=300)
 
 
-def plot_logistic_regression_coeffs(fig_size):
+def plot_logistic_regression_coeffs(fig_size, vaccine_scenario):
 
     # Read estimates from logistic regression
-    df = pd.read_csv('results/logistic.csv')
+    df = pd.read_csv('results/coeffs_{}.csv'.format(vaccine_scenario))
     # Reverse the order of rows
     # df = df.iloc[::-1]
     # Filter for estimates and confidence intervals
@@ -97,4 +97,4 @@ def plot_logistic_regression_coeffs(fig_size):
     fig.tight_layout()
 
     # Save the plot
-    fig.savefig('figs/logistic_regression_ci.png', dpi=300, bbox_inches='tight')
+    fig.savefig('figs/logistic_regression_ci_{}.png'.format(vaccine_scenario), dpi=300, bbox_inches='tight')

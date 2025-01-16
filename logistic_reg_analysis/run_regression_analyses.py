@@ -36,49 +36,57 @@ Race [
  'Asian/Asian American,Asian Indian' 'Japanese,Korean']
 '''
 
-variable_labels = list(DICT_VARIABLES.keys())
-y_label = ['Class_1']
+def run_logistic_regression_analysis(vaccine_scenario):
 
-# read the data into table
-data = pd.read_csv(ROOT_DIR+'/lca_individuals/results_LCA_no_vaccine_class_probabilities_and_characters.csv')
+    variable_labels = list(DICT_VARIABLES.keys())
+    y_label = ['Class_1']
 
-# remove rows with missing data
-data_cleaned = data.dropna(subset=variable_labels + y_label)
-data_reduced = data_cleaned[variable_labels + y_label]
+    # read the data into table
+    data = pd.read_csv(
+        ROOT_DIR+'/lca_individuals/results_LCA_{}_class_probabilities_and_characters.csv'.format(vaccine_scenario))
 
-# replace 'self_define', 'non_binary', 'prefer_not_to_answer' with 'Other'
-data_reduced.loc[data_reduced['Gender'].isin(['Self-define', 'Non-binary', 'Prefer not to answer']), 'Gender'] = 'Other'
-data_reduced.loc[data_reduced['Age'].isin(['50-64', '35-49' '25-34' '18-24']), 'Age'] = '<65'
-data_reduced.loc[data_reduced['Pregnant'].isin(['No', 'nan']), 'Pregnant'] = 'No'
-data_reduced.loc[data_reduced['Hispanic'].isin(['No', 'nan']), 'Hispanic'] = 'No'
-data_reduced.loc[data_reduced['Education'].isin(
-    ['Postgraduate degree', 'Undergraduate degree', 'Associate’s degree']), 'Education'] = 'With College Degree'
-data_reduced.loc[data_reduced['Education'].isin([
-    '1 or more years of college credit, no degree',
-    'High school or GED',
-    'Some college credits']), 'Education'] = 'Without College Degree'
+    # remove rows with missing data
+    data_cleaned = data.dropna(subset=variable_labels + y_label)
+    data_reduced = data_cleaned[variable_labels + y_label]
+
+    # replace 'self_define', 'non_binary', 'prefer_not_to_answer' with 'Other'
+    data_reduced.loc[data_reduced['Gender'].isin(['Self-define', 'Non-binary', 'Prefer not to answer']), 'Gender'] = 'Other'
+    data_reduced.loc[data_reduced['Age'].isin(['50-64', '35-49' '25-34' '18-24']), 'Age'] = '<65'
+    data_reduced.loc[data_reduced['Pregnant'].isin(['No', 'nan']), 'Pregnant'] = 'No'
+    data_reduced.loc[data_reduced['Hispanic'].isin(['No', 'nan']), 'Hispanic'] = 'No'
+    data_reduced.loc[data_reduced['Education'].isin(
+        ['Postgraduate degree', 'Undergraduate degree', 'Associate’s degree']), 'Education'] = 'With College Degree'
+    data_reduced.loc[data_reduced['Education'].isin([
+        '1 or more years of college credit, no degree',
+        'High school or GED',
+        'Some college credits']), 'Education'] = 'Without College Degree'
 
 
-# one-hot encode the categorical variables
-data_encoded = pd.get_dummies(data_reduced, columns=variable_labels)
+    # one-hot encode the categorical variables
+    data_encoded = pd.get_dummies(data_reduced, columns=variable_labels)
 
-# find the list of encoded variable names
-labels_of_coded_variables = []
-for var, var_details in DICT_VARIABLES.items():
-    labels_of_coded_variables += [var+'_'+label for label in var_details['values'][1:]]
+    # find the list of encoded variable names
+    labels_of_coded_variables = []
+    for var, var_details in DICT_VARIABLES.items():
+        labels_of_coded_variables += [var+'_'+label for label in var_details['values'][1:]]
 
-# read the coded columns
-X = data_encoded[labels_of_coded_variables]
+    # read the coded columns
+    X = data_encoded[labels_of_coded_variables]
 
-X = X.astype('float64')
+    X = X.astype('float64')
 
-y = data_encoded[y_label]
+    y = data_encoded[y_label]
 
-# do correlation analysis
-do_correlation_analysis(X=X)
+    # do correlation analysis
+    do_correlation_analysis(X=X, vaccine_scenario=vaccine_scenario)
 
-# do logistic regression
-do_logistic_regression(X=X, y=y)
+    # do logistic regression
+    do_logistic_regression(X=X, y=y, vaccine_scenario=vaccine_scenario)
 
-# plot logistic regression coefficients
-plot_logistic_regression_coeffs()
+    # plot logistic regression coefficients
+    plot_logistic_regression_coeffs(fig_size=(6, 11), vaccine_scenario=vaccine_scenario)
+
+
+if __name__ == '__main__':
+    run_logistic_regression_analysis(vaccine_scenario='no_vaccine')
+    run_logistic_regression_analysis(vaccine_scenario='vaccine')
