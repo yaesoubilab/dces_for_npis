@@ -10,7 +10,8 @@ def do_correlation_analysis(X, vaccine_scenario):
 
     # correlation matrix
     correlation_matrix = X.corr()
-    correlation_matrix.to_csv('results/correlation_matrix.csv', index=True)
+    correlation_matrix.to_csv(
+        'results/correlation_matrix_{}.csv'.format(vaccine_scenario), index=True)
 
     # get the maximum and minimum correlation
     np.fill_diagonal(correlation_matrix.values, np.nan)
@@ -37,7 +38,7 @@ def add_coeff_to_ax(ax, estimates, ci_l, ci_u, title=None, y_labels=None, x_rang
 
     ax.axvline(x=0, color='gray', linestyle='--', linewidth=1)  # Reference line for zero
     # ax.set_title('Logistic Regression Coefficients with Confidence Intervals')
-    ax.set_xlabel('Estimate')
+    ax.set_xlabel('Coefficient Estimate')
     ax.set_yticks(range(len(y_labels)))
     ax.set_yticklabels(y_labels, fontsize=10)
     ax.set_title(title)
@@ -118,17 +119,20 @@ def plot_coeffs_both(fig_size, x_range):
     # Plot estimates with confidence intervals
     fig, ax = plt.subplots(1, 2, figsize=fig_size, sharey=True)
 
+    ax[0].set_title('A)', loc='left', weight='bold')
+    ax[1].set_title('B)', loc='left', weight='bold')
+
     # get labels, estimates, and confidence intervals
     y_labels, estimates, ci_l, ci_u = get_estimates_and_ci(vaccine_scenario='no_vaccine')
     add_coeff_to_ax(
         ax=ax[0], estimates=estimates, ci_l=ci_l, ci_u=ci_u,
-        y_labels=y_labels, x_range=x_range, title='Vaccine Not Available')
+        y_labels=y_labels, x_range=x_range, title='Vaccine\nNot Available')
 
     # get labels, estimates, and confidence intervals
     y_labels, estimates, ci_l, ci_u = get_estimates_and_ci(vaccine_scenario='vaccine')
     add_coeff_to_ax(
         ax=ax[1], estimates=estimates, ci_l=ci_l, ci_u=ci_u,
-        y_labels=y_labels, x_range=x_range, title='Vaccine Available')
+        y_labels=y_labels, x_range=x_range, title='Vaccine\nAvailable')
 
     # ax.legend()
     fig.tight_layout()
