@@ -36,9 +36,9 @@ def add_coeff_to_ax(ax, estimates, ci_l, ci_u, title=None, y_labels=None, x_rang
         label='Estimate'
     )
 
-    ax.axvline(x=0, color='gray', linestyle='--', linewidth=1)  # Reference line for zero
+    ax.axvline(x=1, color='gray', linestyle='--', linewidth=1)  # Reference line for zero
     # ax.set_title('Logistic Regression Coefficients with Confidence Intervals')
-    ax.set_xlabel('Coefficient Estimate')
+    ax.set_xlabel('Odds Ratio')
     ax.set_yticks(range(len(y_labels)))
     ax.set_yticklabels(y_labels, fontsize=10)
     ax.set_title(title)
@@ -53,7 +53,7 @@ def add_coeff_to_ax(ax, estimates, ci_l, ci_u, title=None, y_labels=None, x_rang
     ax.set_ylim(-1, len(y_labels))
     ax.set_xlim(x_range)
 
-def get_estimates_and_ci(vaccine_scenario):
+def get_odds_and_ci(vaccine_scenario):
 
     # Read estimates from logistic regression
     df = pd.read_csv('results/coeffs_{}.csv'.format(vaccine_scenario))
@@ -66,7 +66,7 @@ def get_estimates_and_ci(vaccine_scenario):
 
     # adjust labels to include references
     y_labels = []
-    estimates = []
+    odds = []
     ci_l = []
     ci_u = []
     for var, var_details in DICT_VARIABLES.items():
@@ -74,37 +74,37 @@ def get_estimates_and_ci(vaccine_scenario):
         for sub_label in var_details['sub labels']:
             y_labels += ['    {}'.format(sub_label)]
 
-        estimates += [np.nan]  # for the variable name
-        estimates += [np.nan]  # for the reference value
+        odds += [np.nan]  # for the variable name
+        odds += [np.nan]  # for the reference value
         ci_l += [np.nan]  # for the variable name
         ci_l += [np.nan]  # for the reference value
         ci_u += [np.nan]  # for the variable name
         ci_u += [np.nan]  # for the reference value
         for var_value in var_details['values'][1:]:
-            e = df.at['{}_{}'.format(var, var_value), 'Estimate']
-            l = df.at['{}_{}'.format(var, var_value), 'CI_Lower']
-            u = df.at['{}_{}'.format(var, var_value), 'CI_Upper']
-            estimates += [e]
+            e = np.exp(df.at['{}_{}'.format(var, var_value), 'Estimate'])
+            l = np.exp(df.at['{}_{}'.format(var, var_value), 'CI_Lower'])
+            u = np.exp(df.at['{}_{}'.format(var, var_value), 'CI_Upper'])
+            odds += [e]
             ci_l += [e - l]
             ci_u += [u - e]
 
     y_labels.reverse()
-    estimates.reverse()
+    odds.reverse()
     ci_l.reverse()
     ci_u.reverse()
 
-    return y_labels, estimates, ci_l, ci_u
+    return y_labels, odds, ci_l, ci_u
 
 
-def plot_logistic_regression_coeffs(fig_size, vaccine_scenario, x_range):
+def plot_logistic_regression_odds(fig_size, vaccine_scenario, x_range):
 
     # get labels, estimates, and confidence intervals
-    y_labels, estimates, ci_l, ci_u = get_estimates_and_ci(vaccine_scenario=vaccine_scenario)
+    y_labels, odds, ci_l, ci_u = get_odds_and_ci(vaccine_scenario=vaccine_scenario)
 
     # Plot estimates with confidence intervals
     fig, ax = plt.subplots(1, 1, figsize=fig_size)
 
-    add_coeff_to_ax(ax, estimates, ci_l, ci_u, y_labels=y_labels, x_range=x_range)
+    add_coeff_to_ax(ax, odds, ci_l, ci_u, y_labels=y_labels, x_range=x_range)
 
     # ax.grid(axis='x', linestyle='--', alpha=0.7)
     # ax.legend()
@@ -123,13 +123,13 @@ def plot_coeffs_both(fig_size, x_range):
     ax[1].set_title('B)', loc='left', weight='bold')
 
     # get labels, estimates, and confidence intervals
-    y_labels, estimates, ci_l, ci_u = get_estimates_and_ci(vaccine_scenario='no_vaccine')
+    y_labels, estimates, ci_l, ci_u = get_odds_and_ci(vaccine_scenario='no_vaccine')
     add_coeff_to_ax(
         ax=ax[0], estimates=estimates, ci_l=ci_l, ci_u=ci_u,
         y_labels=y_labels, x_range=x_range, title='Vaccine\nNot Available')
 
     # get labels, estimates, and confidence intervals
-    y_labels, estimates, ci_l, ci_u = get_estimates_and_ci(vaccine_scenario='vaccine')
+    y_labels, estimates, ci_l, ci_u = get_odds_and_ci(vaccine_scenario='vaccine')
     add_coeff_to_ax(
         ax=ax[1], estimates=estimates, ci_l=ci_l, ci_u=ci_u,
         y_labels=y_labels, x_range=x_range, title='Vaccine\nAvailable')

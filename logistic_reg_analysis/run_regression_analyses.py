@@ -2,7 +2,7 @@ import pandas as pd
 
 from analysis_support import do_logistic_regression
 from defenisions import ROOT_DIR, DICT_VARIABLES
-from fig_support import do_correlation_analysis, plot_logistic_regression_coeffs, plot_coeffs_both
+from fig_support import do_correlation_analysis, plot_logistic_regression_odds, plot_coeffs_both
 
 '''
 Race [
@@ -84,7 +84,7 @@ def run_logistic_regression_analysis(vaccine_scenario):
     do_logistic_regression(X=X, y=y, vaccine_scenario=vaccine_scenario)
 
     # plot logistic regression coefficients
-    plot_logistic_regression_coeffs(fig_size=(6, 11), vaccine_scenario=vaccine_scenario, x_range=(-2, 2))
+    plot_logistic_regression_odds(fig_size=(6, 11), vaccine_scenario=vaccine_scenario, x_range=(-2, 2))
 
 
 if __name__ == '__main__':
