@@ -234,30 +234,3 @@ DICT_VARIABLES = {
     }
 }
 
-
-
-'''
-['Gender_Male', 'Gender_Other',
-                  'Hispanic_Yes',
-                  'Age_≥ 65',
-                  'Income_$35,000 - 75,000', 'Income_$75,000 - 150,000', 'Income_> $150,000',
-                  'Residence_Suburban', 'Residence_Rural',
-                  'Child_Yes',
-                  'Assisted_Living_Yes',
-                  'Chronic_Yes','Chronic_Prefer not to answer',
-                  'Vulnerable_contact_Yes',
-                  'Health_Insurance_Yes',
-                  'Political_Republican', 'Political_Independent', 'Political_Other',
-                  'Self_employed_Yes',
-                  'Remote_Yes', 'Remote_NA (studying, retired, not in paid employment)',
-                  'Pregnant_Yes',
-                  'Vehicle_Yes',
-                  'News_Social media (Instagram, Facebook, X (Twitter), TikTok)',
-                  'News_TV (including cable)',
-                  'News_News apps or websites',
-                  'News_Radio or podcasts',
-                  'News_Do not read/listen/watch the news',
-                  'News_Other',
-                  'Education_With College Degree'
-                  ]
-                  '''
