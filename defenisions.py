@@ -7,11 +7,11 @@ COEFF_X_RANGE = (-0.5, 0.5)
 WTA_X_RANGE = (-25, 225)
 
 COEFF_LABEL = 'Coefficient Estimates'
-WTA_LABEL = 'Willingness to Accept (Reduction in Cases Per 100 Population)'
+WTA_LABEL = 'Willingness to Accept\n(Reduction in Cases Per 100 Population)'
     # 'Minimum Reduction in Cases\nPer 100 Population to Accept an NPI'
     # 'Minimum Effectiveness to be Acceptable\n (Reduction in Cases Per 100 Population)'
 
-COLORS = ['#377eb8', '#ff7f00', '#4daf4a' ] # blue, orange, purple, green
+COLORS = ['#377eb8', '#ff7f00', '#4daf4a', '#17becf'] # blue, orange, purple, green
 # COLORS = ['#17becf', '#e377c2', '#bcbd22'] # cyan, magenta, yellow
 
 SUBGROUP_INFO = {
@@ -63,6 +63,14 @@ SUBGROUP_INFO = {
             'group_colors': COLORS,
             'dist_between_bars': 0.2
         },
+    'education':
+        {
+            'title': 'Education',
+            'group_categories': ['No College Degree', 'Postgraduate degree'],
+            'legend_labels': ['No College Degree', 'College Degree'],
+            'group_colors': COLORS,
+            'dist_between_bars': 0.2
+        },
     'political':
         {
             'title': 'Political\nAffiliation',
@@ -70,6 +78,14 @@ SUBGROUP_INFO = {
             'legend_labels': ['Democrat', 'Independent', 'Republican'],
             'group_colors': COLORS,
             'dist_between_bars': 0.3
+        },
+    'health_insurance':
+        {
+            'title': 'Health Insurance',
+            'group_categories': ['Yes', 'No'],
+            'legend_labels': ['Yes', 'No'],
+            'group_colors': COLORS,
+            'dist_between_bars': 0.2
         },
     'income':
         {
@@ -79,11 +95,38 @@ SUBGROUP_INFO = {
             'group_colors': COLORS,
             'dist_between_bars': 0.2
         },
+    'news':
+        {
+            'title': 'News Source',
+            'group_categories': ['Social media',
+                                 'News apps or websites',
+                                 'Radio or podcasts',
+                                 'Other'],
+            'legend_labels': ['Social Media', 'News Apps & Websites', 'Radio/Podcasts', 'Other'],
+            'group_colors': COLORS,
+            'dist_between_bars': 0.2
+        },
+    'pregnant':
+        {
+            'title': 'Pregnant',
+            'group_categories': ['Yes', 'No'],
+            'legend_labels': ['Yes', 'No'],
+            'group_colors': COLORS,
+            'dist_between_bars': 0.2
+        },
     'race':
         {
             'title': 'Race',
             'group_categories': ['Black', 'White'],
             'legend_labels': ['Black', 'White'],
+            'group_colors': COLORS,
+            'dist_between_bars': 0.2
+        },
+    'remote':
+        {
+            'title': 'Remote Work',
+            'group_categories': ['Yes', 'No'],
+            'legend_labels': ['Yes', 'No'],
             'group_colors': COLORS,
             'dist_between_bars': 0.2
         },

@@ -158,6 +158,7 @@ def do_fig_by_group(
 
     fig.tight_layout(w_pad=3)
     fig.savefig('figs/one_group/{}_by_{}.png'.format(estimate_type, group_name), dpi=300)
+    plt.close(fig)
 
 
 def add_subgroups_to_row(axes, survey_scenario, subgroup_info, estimate_type, x_axis_range,
@@ -217,6 +218,7 @@ def do_row_of_subgroups(estimate_type, survey_scenario, subgroup_info, x_axis_ra
     # combine keys
     group_names = '_'.join(list(subgroup_info.keys()))
     fig.savefig('figs/row_of_groups/{}_by_{}.png'.format(estimate_type, group_names), dpi=300)
+    plt.close(fig)
 
 
 def do_coeff_and_wta_of_a_subgroup(subgroup_name, subgroup_info,
@@ -271,6 +273,7 @@ def do_coeff_and_wta_of_a_subgroup(subgroup_name, subgroup_info,
 
     fig.tight_layout(w_pad=w_pad)
     fig.savefig('figs/one_group/coeff_wta_by_{}.png'.format(subgroup_name), dpi=300)
+    plt.close(fig)
 
 
 def do_matrix_of_subgroups( n_rows, n_cols,
