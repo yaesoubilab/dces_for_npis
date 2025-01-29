@@ -56,6 +56,7 @@ def add_to_ax(ax,
     # ax.legend(loc=legend_loc, fontsize=9)
     ax.set_title(title, pad=title_pad, fontsize=10, weight='bold')
     ax.set_xlim(x_axis_range)
+    ax.set_ylim(-0.5, len(lists_of_estimates[0]) - 0.5)
 
     # delete the first and last x-axis labels
     ax.set_xticks(ax.get_xticks()[1:-1])

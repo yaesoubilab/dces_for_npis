@@ -7,8 +7,8 @@ FIG_SIZE_SQUARE = (10, 10)
 
 if __name__ == '__main__':
 
-    # dict_of_info = SUBGROUP_INFO
-    dict_of_info = {key: SUBGROUP_INFO[key] for key in ['income']}
+    dict_of_info = SUBGROUP_INFO
+    # dict_of_info = {key: SUBGROUP_INFO[key] for key in ['age']}
 
     for sub_group_name, info in dict_of_info.items():
         for estimate_type in ['coeff', 'wta']:
