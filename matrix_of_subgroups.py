@@ -1,9 +1,9 @@
 from defenisions import COEFF_X_RANGE, WTA_X_RANGE, SUBGROUP_INFO
 from support.fig_support import do_matrix_of_subgroups
 
-FIG_SIZE = (10, 11)
+FIG_SIZE = (10.5, 11)
 W_PAD = {'coeff': 2, 'wta': 1}
-LEGEND_PAD = 1.17 # to move the legend up
+LEGEND_PAD = 1.18 # to move the legend up
 TITLE_PAD = 51 # to move the title up
 
 
@@ -11,8 +11,8 @@ TITLE_PAD = 51 # to move the title up
 if __name__ == '__main__':
 
     dict_of_info = {key: SUBGROUP_INFO[key] for key in
-                    ['age', 'gender', 'race', 'child',
-                     'chronic', 'vulnerable_contact', 'residence', 'political']}
+                    ['age', 'gender', 'chronic', 'political',
+                     'race', 'child', 'vulnerable_contact', 'residence']}
 
     for survey_scenario in ['no vaccine', 'vaccine']:
         for estimate_type in ['coeff', 'wta']:
