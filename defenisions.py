@@ -50,8 +50,8 @@ SUBGROUP_INFO = {
     'chronic':
         {
             'title': 'Chronic\nConditions',
-            'group_categories': ['Yes', 'No', 'Prefer not to answer'],
-            'legend_labels': ['Yes', 'No', 'Prefer NA'],
+            'group_categories': ['Yes', 'No'], #, 'Prefer not to answer'],
+            'legend_labels': ['Yes', 'No'], # 'Prefer NA'],
             'group_colors': COLORS,
             'dist_between_bars': 0.3
         },
