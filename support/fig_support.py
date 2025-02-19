@@ -107,7 +107,7 @@ def do_fig_by_group(
         estimate_type, group_name, group_categories, group_colors, legend_labels=None,
         x_range=None, distance_between_bars=0.3, fig_size=(10, 6)):
     """
-    :param estimate_type: (string) 'coeffs' or 'wtas'
+    :param estimate_type: (string) 'coeffs' or 'wta'
     :param group_name:
     :param group_categories:
     :param group_colors:
