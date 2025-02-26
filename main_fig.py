@@ -32,6 +32,14 @@ def do_main_figure():
         table=results_vaccine,
         attribute_keys=DICT_WTA_LABELS.keys(), num_infection_suffix='')
 
+    # add None to the end of each list to make the length of all lists the same
+    wtp_no_vaccine.loc[len(wtp_no_vaccine)] = None
+    for l in wtp_errs_no_vaccine:
+        l.loc[len(l)] = None
+    wtp_vaccine.loc[len(wtp_no_vaccine)] = None
+    for l in wtp_errs_vaccine:
+        l.loc[len(l)] = None
+
     # plot
     fig, ax = plt.subplots(1, 2, figsize=FIG_SIZE, sharey=True)
     ax[0].set_title('A)', loc='left', weight='bold')
@@ -56,7 +64,7 @@ def do_main_figure():
     )
 
     fig.tight_layout(w_pad=3)
-    fig.savefig('figs/coeff_and_wta.png')
+    fig.savefig('figs/coeff_and_wta.png', dpi=300)
 
 
 if __name__ == '__main__':
