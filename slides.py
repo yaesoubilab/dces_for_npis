@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 
 from defenisions import *
 from support.fig_support import add_to_ax, add_to_2_axes
+from support.func_support import get_dict_estimates_and_errs_by_subgroups
 from support.func_support import get_wtas_and_errs, get_table, get_coefs_and_errs
 
 FIG_SIZE_1 = (6.5, 5)
@@ -55,7 +56,7 @@ def do_main_vaccine():
     fig.savefig('figs/vaccine_coeff_and_wta.png', dpi=300)
 
 
-def do_main_coeff_vacine():
+def do_main_coeff_no_vaccine():
 
     # read results for vaccine and no vaccine scenarios
     results_no_vaccine = get_table(
@@ -86,11 +87,47 @@ def do_main_coeff_vacine():
         title_pad=None
     )
 
-    fig.tight_layout(w_pad=3)
+    fig.tight_layout()
     fig.savefig('figs/vaccine_coeff.png', dpi=300)
+
+
+def do_subgroup_coeff_vaccine(group_name):
+
+    # get estimates and errors
+    estims_no_vaccine, errs_no_vaccine = get_dict_estimates_and_errs_by_subgroups(
+        survey_scenario='no vaccine',
+        subgroup_name=group_name,
+        attribute_keys=DICT_COEFF_LABELS.keys(),
+        subgroup_categories=SUBGROUP_INFO[group_name]['group_categories'], estimate_type='coeff')
+
+    # plot
+    fig, ax = plt.subplots(1, 1, figsize=FIG_SIZE_1, sharey=True)
+
+    # plot coefficient and wta estimates side by side
+    add_to_ax(
+        ax=ax,
+        lists_of_estimates=list(estims_no_vaccine.values()),
+        lists_of_errs=list(errs_no_vaccine.values()),
+        x_axis_label=COEFF_LABEL,
+        colors=SUBGROUP_INFO[group_name]['group_colors'],
+        legend_labels=SUBGROUP_INFO[group_name]['legend_labels'],
+        y_axis_labels=DICT_COEFF_LABELS.values(),
+        title=None,
+        x_axis_range=COEFF_X_RANGE,
+        distance_between_bars=SUBGROUP_INFO[group_name]['dist_between_bars'],
+        legend_pad=None,
+        title_pad=None
+    )
+
+    fig.tight_layout(w_pad=3)
+    fig.savefig('figs/vaccine_coeff_{}.png'.format(group_name), dpi=300)
+
 
 
 if __name__ == '__main__':
 
     do_main_vaccine()
-    do_main_coeff_vacine()
+    do_main_coeff_no_vaccine()
+
+    do_subgroup_coeff_vaccine(group_name='gender')
+    do_subgroup_coeff_vaccine(group_name='political')
