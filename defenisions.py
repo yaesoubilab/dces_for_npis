@@ -75,7 +75,8 @@ SUBGROUP_INFO = {
         {
             'title': 'Political\nAffiliation',
             'group_categories': ['Democrat', 'Independent', 'Republican'],
-            'legend_labels': ['Democrat', 'Independent', 'Republican'],
+            # 'legend_labels': ['Democrat', 'Independent', 'Republican'],
+            'legend_labels': ['Dem', 'Ind', 'Rep'],
             'group_colors': ['royalblue', 'plum', 'orangered'],
             'dist_between_bars': 0.3
         },

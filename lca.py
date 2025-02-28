@@ -10,7 +10,7 @@ def do_lca_fig():
             estimate_type=estimate_type,
             group_name='LCA',
             group_categories=['class0', 'class1'],
-            legend_labels=['Infection Cautious', 'Infection Averse'],
+            legend_labels= ['Class 0', 'Class 1'], # ['Infection Cautious', 'Infection Averse'],
             group_colors=['#008080', '#B34D4D'],
             x_range=COEFF_X_RANGE if estimate_type == 'coeff' else WTA_X_RANGE,
             distance_between_bars=0.2,
@@ -32,4 +32,4 @@ def do_lca3_fig():
 
 if __name__ == '__main__':
     do_lca_fig()
-    do_lca3_fig()
+    # do_lca3_fig()
