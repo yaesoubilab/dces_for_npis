@@ -12,7 +12,7 @@ WTA_LABEL = 'Willingness to Accept\n(Reduction in Cases Per 100 Population)'
     # 'Minimum Effectiveness to be Acceptable\n (Reduction in Cases Per 100 Population)'
 
 # COLORS = ['#377eb8', '#ff7f00', '#4daf4a', '#17becf'] # blue, orange, purple, green
-COLORS = ['royalblue', 'mediumorchid', 'orangered', '#17becf']
+COLORS = ['royalblue', 'orchid', 'orangered', '#17becf']
 # COLORS = ['#17becf', '#e377c2', '#bcbd22'] # cyan, magenta, yellow
 
 SUBGROUP_INFO = {

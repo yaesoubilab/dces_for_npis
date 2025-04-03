@@ -51,7 +51,8 @@ def add_to_ax(ax,
     if len(legend_labels) > 1:
         ax.legend(loc=legend_loc,
                   bbox_to_anchor=None if legend_pad is None else (0.5, legend_pad),
-                  ncol=1, fontsize=9)
+                  ncol=1, fontsize=9,
+                  frameon=True)
 
     # ax.legend(loc=legend_loc, fontsize=9)
     ax.set_title(title, pad=title_pad, fontsize=10, weight='bold')
@@ -315,11 +316,13 @@ def do_matrix_of_subgroups( n_rows, n_cols,
 
 
     fig.supxlabel(COEFF_LABEL.replace("\n", " ") if estimate_type == 'coeff' else WTA_LABEL.replace("\n", " "),
-                  fontsize=11, weight='bold' , x=0.65, y=0.06)
+                  fontsize=11, weight='bold' ,
+                  x=0.65,
+                  y=0.02 if estimate_type == 'coeff' else 0.06)
 
     if estimate_type == 'wta':
         fig.text(0.01, 0.01, r'$^*$If the willingness-to-accept estimate is not presented, '
-                       'it implies that the subgroups rejected the NPI independent of '
+                       'it implies that the subgroup rejected the NPI independent of '
                        'its\n  impact on the number of cases.', fontsize=12)
 
     fig.tight_layout(w_pad=w_pad, h_pad=h_pad,

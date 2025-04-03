@@ -3,8 +3,7 @@ from support.fig_support import do_matrix_of_subgroups
 
 FIG_SIZE = (10.5, 11)
 W_PAD = {'coeff': 2, 'wta': 1}
-LEGEND_PAD = 1.18 # to move the legend up
-TITLE_PAD = 51 # to move the title up
+
 
 
 
@@ -15,7 +14,16 @@ if __name__ == '__main__':
                      'race', 'child', 'vulnerable_contact', 'residence']}
 
     for survey_scenario in ['no vaccine', 'vaccine']:
+
         for estimate_type in ['coeff', 'wta']:
+
+            if estimate_type == 'coeff':
+                LEGEND_PAD = 1.18  # to move the legend up
+                TITLE_PAD = 51  # to move the title up
+            elif estimate_type == 'wta':
+                LEGEND_PAD = 1.21  # to move the legend up
+                TITLE_PAD = 53 # to move the title up
+
             do_matrix_of_subgroups(
                 n_rows=2, n_cols=4,
                 estimate_type=estimate_type,
