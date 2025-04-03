@@ -52,7 +52,7 @@ def do_main_vaccine():
         distance_between_bars=0
     )
 
-    fig.tight_layout(w_pad=3)
+    fig.tight_layout()
     fig.savefig('figs/vaccine_coeff_and_wta.png', dpi=300)
 
 

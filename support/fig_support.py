@@ -187,7 +187,7 @@ def add_subgroups_to_row(axes, survey_scenario, subgroup_info, estimate_type, x_
             lists_of_errs=list(dict_errs.values()),
             x_axis_label=x_axis_label,
             colors=subgroup_info[key]['group_colors'],
-            legend_labels=subgroup_info[key]['legend_labels'],
+            legend_labels=subgroup_info[key]['legend_labels'] if estimate_type == 'coeff' else subgroup_info[key]['legend_labels_wta'],
             y_axis_labels=DICT_COEFF_LABELS.values() if estimate_type == 'coeff' else DICT_WTA_LABELS.values(),
             title=subgroup_info[key]['title'],
             x_axis_range=x_axis_range,
@@ -313,10 +313,17 @@ def do_matrix_of_subgroups( n_rows, n_cols,
     #          COEFF_LABEL.replace("\n", " ") if estimate_type == 'coeff' else WTA_LABEL.replace("\n", " "),
     #          fontsize=12)
 
-    fig.supxlabel(COEFF_LABEL.replace("\n", " ") if estimate_type == 'coeff' else WTA_LABEL.replace("\n", " "),
-                  fontsize=11, weight='bold' , x=0.65, y=0.02)
 
-    fig.tight_layout(w_pad=w_pad, h_pad=h_pad)
+    fig.supxlabel(COEFF_LABEL.replace("\n", " ") if estimate_type == 'coeff' else WTA_LABEL.replace("\n", " "),
+                  fontsize=11, weight='bold' , x=0.65, y=0.06)
+
+    if estimate_type == 'wta':
+        fig.text(0.01, 0.01, r'$^*$If the willingness-to-accept estimate is not presented, '
+                       'it implies that the subgroups rejected the NPI independent of '
+                       'its\n  impact on the number of cases.', fontsize=12)
+
+    fig.tight_layout(w_pad=w_pad, h_pad=h_pad,
+                     rect=[0.0, 0.04, 1, 1] if estimate_type== 'wta' else None)
     # combine keys
     group_names = '_'.join(list(subgroup_info.keys()))
     fig.savefig('figs/matrix_of_groups/{}_{}_by_{}.png'.format(survey_scenario, estimate_type, group_names),

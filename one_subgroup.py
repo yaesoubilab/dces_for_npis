@@ -7,8 +7,8 @@ FIG_SIZE_SQUARE = (10, 10)
 
 if __name__ == '__main__':
 
-    # dict_of_info = SUBGROUP_INFO
-    dict_of_info = {key: SUBGROUP_INFO[key] for key in ['political']}
+    dict_of_info = SUBGROUP_INFO
+    # dict_of_info = {key: SUBGROUP_INFO[key] for key in ['political']}
 
     for sub_group_name, info in dict_of_info.items():
         for estimate_type in ['coeff', 'wta']:
@@ -16,7 +16,7 @@ if __name__ == '__main__':
                 estimate_type=estimate_type,
                 group_name=sub_group_name,
                 group_categories=info['group_categories'],
-                legend_labels=info['legend_labels'],
+                legend_labels=info['legend_labels'] if estimate_type == 'coeff' else info['legend_labels_wta'] ,
                 group_colors=info['group_colors'],
                 x_range= COEFF_X_RANGE if estimate_type == 'coeff' else WTA_X_RANGE,
                 distance_between_bars=info['dist_between_bars'],
