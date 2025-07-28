@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from defenisions import *
-from support.func_support import get_dict_estimates_and_errs_by_subgroups
+from figs_and_post_analyses.support.func_support import get_dict_estimates_and_errs_by_subgroups
 
 
 def add_to_ax(ax,

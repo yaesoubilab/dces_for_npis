@@ -1,10 +1,8 @@
 from defenisions import COEFF_X_RANGE, WTA_X_RANGE, SUBGROUP_INFO
-from support.fig_support import do_matrix_of_subgroups
+from figs_and_post_analyses.support.fig_support import do_matrix_of_subgroups
 
 FIG_SIZE = (10.5, 11)
 W_PAD = {'coeff': 2, 'wta': 1}
-
-
 
 
 if __name__ == '__main__':

@@ -1,9 +1,9 @@
 import matplotlib.pyplot as plt
 
 from defenisions import *
-from support.fig_support import add_to_ax, add_to_2_axes
-from support.func_support import get_dict_estimates_and_errs_by_subgroups
-from support.func_support import get_wtas_and_errs, get_table, get_coefs_and_errs
+from figs_and_post_analyses.support.fig_support import add_to_ax, add_to_2_axes
+from figs_and_post_analyses.support.func_support import get_dict_estimates_and_errs_by_subgroups
+from figs_and_post_analyses.support.func_support import get_wtas_and_errs, get_table, get_coefs_and_errs
 
 FIG_SIZE_1 = (6.5, 5)
 FIG_SIZE_2 = (10, 6)
@@ -53,7 +53,7 @@ def do_main_vaccine():
     )
 
     fig.tight_layout()
-    fig.savefig('figs/vaccine_coeff_and_wta.png', dpi=300)
+    fig.savefig('figs/slides/vaccine_coeff_and_wta.png', dpi=300)
 
 
 def do_main_coeff_no_vaccine():

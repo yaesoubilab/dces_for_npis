@@ -1,5 +1,5 @@
 from defenisions import *
-from support.fig_support import do_fig_by_group
+from figs_and_post_analyses.support.fig_support import do_fig_by_group
 
 FIG_SIZE = (10, 6)
 

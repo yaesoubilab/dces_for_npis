@@ -1,5 +1,5 @@
 from defenisions import SUBGROUP_INFO, COEFF_X_RANGE, WTA_X_RANGE
-from support.fig_support import do_fig_by_group, do_coeff_and_wta_of_a_subgroup
+from figs_and_post_analyses.support.fig_support import do_fig_by_group, do_coeff_and_wta_of_a_subgroup
 
 FIG_SIZE_ROW = (10, 6)
 FIG_SIZE_SQUARE = (10, 10)

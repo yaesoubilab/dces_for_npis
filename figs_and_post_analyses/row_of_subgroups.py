@@ -1,5 +1,5 @@
 from defenisions import COEFF_X_RANGE, WTA_X_RANGE, SUBGROUP_INFO
-from support.fig_support import do_row_of_subgroups
+from figs_and_post_analyses.support.fig_support import do_row_of_subgroups
 
 FIG_SIZE = (10, 6)
 SURVEY_SCENARIO = 'no vaccine'  # 'no vaccine' or 'vaccine'

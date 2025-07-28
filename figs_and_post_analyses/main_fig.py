@@ -1,8 +1,8 @@
 import matplotlib.pyplot as plt
 
 from defenisions import *
-from support.fig_support import add_to_2_axes
-from support.func_support import get_wtas_and_errs, get_table, get_coefs_and_errs
+from figs_and_post_analyses.support.fig_support import add_to_2_axes
+from figs_and_post_analyses.support.func_support import get_wtas_and_errs, get_table, get_coefs_and_errs
 
 FIG_SIZE = (10, 6)
 
