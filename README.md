@@ -17,7 +17,7 @@ the population willingness-to-accept (WTA) increased levels of infection in the 
 
 ## Data
 
-The datasets under [data](\data) contain the results of DCEs conducted in the US between May-December 2024. 
+The datasets under [data](data) contain the results of DCEs conducted in the US between May-December 2024. 
 The dataset includes the survey results from two survey scenarios representing the availability of effective vaccines. 
 In total, 2,519 and 2,527 participants completed the surveys for ‘vaccine’ and ‘no vaccine’ 
 scenarios:  
