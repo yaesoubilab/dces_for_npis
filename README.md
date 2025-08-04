@@ -29,7 +29,7 @@ scenarios:
 In addition to the DCE responses, we collected various socio-economic and demographic 
 variables from the individuals, which are included in these csv files.
 
-## Code/software
+## Code
 
 The script [analysis_script.ipynb](dce_analysis/analysis_script.ipynb) contains the main analysis script
 to estimate the coefficients of mixed logic models used to analyze the data. 
