@@ -24,7 +24,7 @@ scenarios:
 - CSV files with prefix `DCE COVID19 No Vaccine` contain the responses for the no vaccine scenario and 
 `Qualtrics_design_no_vacc_COVID-19_29_April` contains the corresponding experimental designs.
 - CSV files with prefix `DCE COVID19 Vaccine` contain the responses for the vaccine scenario and 
-- `Qualtrics_design_vacc_COVID-19_29_April` contains the corresponding experimental designs.
+`Qualtrics_design_vacc_COVID-19_29_April` contains the corresponding experimental designs.
 
 In addition to the DCE responses, we collected various socio-economic and demographic 
 variables from the individuals, which are included in these csv files.
